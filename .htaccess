@@ -7,15 +7,3 @@ Require all denied
   Header always set X-Robots-Tag "noindex, nofollow, noarchive"
   Header always set X-Content-Type-Options "nosniff"
 </IfModule>
-
-# Temporary A9.9 scoped LiteSpeed PHP configuration test only.
-php_value upload_max_filesize 24M
-php_value post_max_size 25M
-php_value max_file_uploads 1
-php_value max_execution_time 180
-php_value max_input_time 180
-php_value memory_limit 256M
-<Files "a9_9_ini_probe.php">
-  Require all granted
-  LimitRequestBody 27262976
-</Files>
