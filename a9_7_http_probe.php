@@ -30,6 +30,7 @@ if (!str_starts_with((string)parse_url($_SERVER['REQUEST_URI']??'', PHP_URL_PATH
 require '/home/u342033576/.motricialy-a2t-stage-a9/app-a9-7-full/test-public/tools/audio-to-text/api/index.php';
 ROUTER;
 $results = [];
+$failed = false;
 try {
     if (file_put_contents($router, $src, LOCK_EX) !== strlen($src)) throw new RuntimeException('router write');
     @chmod($router, 0600);
@@ -103,8 +104,10 @@ try {
 }catch(Throwable $e){
     echo json_encode(['stage'=>'A9.7','status'=>'LOOPBACK_HTTP_FAILED','reason_class'=>get_class($e),
       'passed_tests'=>$results,'openai_calls'=>0],JSON_UNESCAPED_SLASHES).PHP_EOL;
-    exit(97);
+    $failed = true;
 }finally{
     if (is_resource($server)) { @proc_terminate($server); @proc_close($server); }
     @unlink($router);
 }
+
+if ($failed) exit(97);
