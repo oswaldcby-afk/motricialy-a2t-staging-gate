@@ -7,7 +7,7 @@ if(PHP_SAPI!=='cli'||basename(__DIR__)!=='audio-to-text-a9-private-gate-20261120
 if(strpos((string)@file_get_contents(__DIR__.'/.htaccess'),'Require all denied')===false)exit(91);
 if(getenv('A2T_ENABLE_LIVE')==='1')exit(92);
 $root='/home/u342033576/.motricialy-a2t-stage-a9';
-$ledgerPath=$root.'/app-a9-7/private-server/ledger.php';
+$ledgerPath=$root.'/app-a9-7-full/private-server/ledger.php';
 $configPath=$root.'/mysql-a9.json';
 $mark=$root.'/a9-7-ledger-qa.done';
 if(is_file($mark)){echo "A9_7_TEST_ALREADY_COMPLETED\n";exit;}
