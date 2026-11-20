@@ -44,7 +44,7 @@ try{
  $wav='RIFF'.pack('V',36+strlen($data)).'WAVEfmt '.pack('VvvVVvv',16,1,1,$rate,$rate*2,2,16).'data'.pack('V',strlen($data)).$data;
  $file=$tmp.'/fixture.wav';$fake=$tmp.'/fake.wav';
  file_put_contents($file,$wav,LOCK_EX);@chmod($file,0600);
- file_put_contents($fake,'THIS IS NOT AUDIO',LOCK_EX);@chmod($fake,0600);
+ file_put_contents($fake,str_repeat('NOT-A-WAV-HEADER',8),LOCK_EX);@chmod($fake,0600);
  $goodHash=hash_file('sha256',$file);$badHash=hash_file('sha256',$fake);
  $auth=['X-A2T-Stage-Key: '.$key];$origin=['Origin: https://motricialy.com'];
  a99check('deny_all_other_scripts',a99call(str_replace('a9_9_upload_gateway.php','a9_9_keygen.php',$endpoint)) ,[403],$results);
@@ -76,13 +76,22 @@ try{
  a99check('extension_spoof_rejected',$wrongExt,[415],$results);
  $noFile=a99call($endpoint.'?action=upload','POST',array_merge($auth,$origin),['blank'=>'none']);
  a99check('missing_audio_rejected',$noFile,[422],$results);
+ $large=$tmp.'/oversized.wav';
+ $fd=fopen($large,'wb');
+ if(!is_resource($fd)||!ftruncate($fd,28*1024*1024))throw new RuntimeException('oversized_fixture_failed');
+ fclose($fd);@chmod($large,0600);
+ $oversized=a99call($endpoint.'?action=upload','POST',array_merge($auth,$origin,['X-A2T-Fixture-Sha256: '.hash_file('sha256',$large)]),
+   ['audio'=>new CURLFile($large,'audio/wav','oversized.wav')]);
+ a99check('oversized_multipart_rejected',$oversized,[413],$results);
+ $results['oversized_rejection_layer']=is_array($oversized['body'])?'application_layer_or_php':'web_server_before_php';
+
  a99check('unlisted_route_rejected',a99call($endpoint.'?action=process','GET',$auth),[404],$results);
  $status='HTTPS_UPLOAD_PASS';$reason='all_test_cases_passed';
  @file_put_contents($root.'/a9-9-https-upload-qa.done','done',LOCK_EX);
  @chmod($root.'/a9-9-https-upload-qa.done',0600);
 }catch(Throwable $e){$reason=$e->getMessage();}
 finally{
- foreach(['fixture.wav','fake.wav'] as $n)if(is_file($tmp.'/'.$n))@unlink($tmp.'/'.$n);
+ foreach(['fixture.wav','fake.wav','oversized.wav'] as $n)if(is_file($tmp.'/'.$n))@unlink($tmp.'/'.$n);
  @rmdir($tmp);$results['client_temp_deleted']=!is_dir($tmp);
 }
 unset($key);
