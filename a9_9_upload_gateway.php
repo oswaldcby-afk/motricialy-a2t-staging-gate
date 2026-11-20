@@ -60,16 +60,20 @@ try{
  if(!hash_equals($sha,(string)hash_file('sha256',$target)))throw new RuntimeException('moved_sha_mismatch');
  if(!@unlink($target)||!@rmdir($tmpDir))throw new RuntimeException('cleanup_failed');
  $tmpDir=null;
- a99send(200,['stage'=>'A9.9','status'=>'REAL_MULTIPART_PREFLIGHT_PASS','is_uploaded_file'=>true,
+ $resultCode=200;
+ $resultBody=[['stage'=>'A9.9','status'=>'REAL_MULTIPART_PREFLIGHT_PASS','is_uploaded_file'=>true,
   'candidate_preflight'=>true,'duration_seconds'=>round($duration,2),'fileformat'=>'wav',
-  'move_uploaded_file'=>true,'temp_files_deleted'=>true,'paid_api_calls'=>0]);
+  'move_uploaded_file'=>true,'temp_files_deleted'=>true,'paid_api_calls'=>0];
 }catch(Throwable $e){
  $reason=($e instanceof RuntimeException)?$e->getMessage():get_class($e);
  $allowed=['dependencies_missing','candidate_preflight_invalid','qa_media_mismatch','private_tmp_dir','move_uploaded_file_failed','moved_sha_mismatch','cleanup_failed'];
- a99send(in_array($reason,$allowed,true)?503:422,['stage'=>'A9.9','status'=>'UPLOAD_REJECTED','reason'=>in_array($reason,$allowed,true)?$reason:'media_preflight_rejected','paid_api_calls'=>0]);
+ $resultCode=in_array($reason,$allowed,true)?503:422;
+ $resultBody=['stage'=>'A9.9','status'=>'UPLOAD_REJECTED','reason'=>in_array($reason,$allowed,true)?$reason:'media_preflight_rejected','paid_api_calls'=>0];
 }finally{
  if(is_string($tmpDir)&&is_dir($tmpDir)){
   $f=$tmpDir.'/fixture.wav';if(is_file($f))@unlink($f);
   @rmdir($tmpDir);
  }
 }
+
+a99send($resultCode??503,$resultBody??['error'=>'unclassified']);
