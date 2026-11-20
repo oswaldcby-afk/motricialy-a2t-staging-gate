@@ -7,9 +7,3 @@ Require all denied
   Header always set X-Robots-Tag "noindex, nofollow, noarchive"
   Header always set X-Content-Type-Options "nosniff"
 </IfModule>
-
-# Temporary A9.8: only this authenticated, paid-disabled QA bridge is reachable.
-# The PHP entrypoint additionally requires a 256-bit Hostinger-private header.
-<Files "a9_8_gateway.php">
-  Require all granted
-</Files>
