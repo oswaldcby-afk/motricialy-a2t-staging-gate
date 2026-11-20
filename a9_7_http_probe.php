@@ -31,6 +31,7 @@ require '/home/u342033576/.motricialy-a2t-stage-a9/app-a9-7-full/test-public/too
 ROUTER;
 $results = [];
 $failed = false;
+$lastStatus = 0;
 try {
     if (file_put_contents($router, $src, LOCK_EX) !== strlen($src)) throw new RuntimeException('router write');
     @chmod($router, 0600);
@@ -58,7 +59,7 @@ try {
     };
     $connected=false;
     for($i=0;$i<24;$i++) {
-        try{$x=$request('config');if($x['status']===200){$connected=true;break;}}
+        try{$x=$request('config');$lastStatus=$x['status'];if($x['status']===200){$connected=true;break;}}
         catch(Throwable $e){}
         usleep(180000);
     }
@@ -102,8 +103,10 @@ try {
     echo json_encode(['stage'=>'A9.7','status'=>'LOOPBACK_HTTP_PASS','tests'=>$results,
         'public_url_published'=>false,'openai_calls'=>0],JSON_UNESCAPED_SLASHES).PHP_EOL;
 }catch(Throwable $e){
-    echo json_encode(['stage'=>'A9.7','status'=>'LOOPBACK_HTTP_FAILED','reason_class'=>get_class($e),
-      'passed_tests'=>$results,'openai_calls'=>0],JSON_UNESCAPED_SLASHES).PHP_EOL;
+    $allowed=['loopback server launch unavailable','loopback server did not start','loopback HTTP unavailable','config is not fail-closed','DOCX HTTP status or content type','transcription not disabled','AI process not disabled','cross-origin not rejected','empty DOCX validation','unknown route','router write','temp','invalid docx package','docx escaped text invalid'];
+    $reason=in_array($e->getMessage(),$allowed,true)?$e->getMessage():'unclassified_failure';
+    echo json_encode(['stage'=>'A9.7','status'=>'LOOPBACK_HTTP_FAILED','reason'=>$reason,
+      'last_status'=>$lastStatus,'passed_tests'=>$results,'openai_calls'=>0],JSON_UNESCAPED_SLASHES).PHP_EOL;
     $failed = true;
 }finally{
     if (is_resource($server)) { @proc_terminate($server); @proc_close($server); }
