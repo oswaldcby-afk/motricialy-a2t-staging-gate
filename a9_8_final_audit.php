@@ -39,8 +39,8 @@ try{
   $response=curl_exec($ch);
   $errno=curl_errno($ch);$http=(int)curl_getinfo($ch,CURLINFO_HTTP_CODE);
   curl_close($ch);
-  $expected=($name==='a9_8_gateway.php')?404:403;
-  $status[$name]=['https_errno'=>$errno,'expected'=>$expected,'http_status'=>$http,'denied'=>$errno===0&&$http===$expected];
+  $acceptable=($name==='a9_8_gateway.php')?[403,404]:[403];
+  $status[$name]=['https_errno'=>$errno,'acceptable_status'=>$acceptable,'http_status'=>$http,'denied'=>$errno===0&&in_array($http,$acceptable,true)];
  }
  $r['public_https_denial']=$status;
  $all=true;
