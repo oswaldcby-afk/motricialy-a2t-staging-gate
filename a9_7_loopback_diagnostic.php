@@ -54,7 +54,7 @@ try {
  $out['direct_tcp_errno']=is_resource($direct)?0:$directErr;
  if(is_resource($direct)){
    stream_set_timeout($direct,2);
-   fwrite($direct,"GET /index.html HTTP/1.0\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n");
+   fwrite($direct,"GET /index.html HTTP/1.0\r\nHost: localhost\r\nConnection: close\r\n\r\n");
    $response=(string)stream_get_contents($direct);
    $out['direct_http_success']=str_contains($response,'A9_LOOPBACK_OK');
    fclose($direct);
