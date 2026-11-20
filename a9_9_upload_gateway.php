@@ -61,7 +61,7 @@ try{
  if(!@unlink($target)||!@rmdir($tmpDir))throw new RuntimeException('cleanup_failed');
  $tmpDir=null;
  $resultCode=200;
- $resultBody=[['stage'=>'A9.9','status'=>'REAL_MULTIPART_PREFLIGHT_PASS','is_uploaded_file'=>true,
+ $resultBody=['stage'=>'A9.9','status'=>'REAL_MULTIPART_PREFLIGHT_PASS','is_uploaded_file'=>true,
   'candidate_preflight'=>true,'duration_seconds'=>round($duration,2),'fileformat'=>'wav',
   'move_uploaded_file'=>true,'temp_files_deleted'=>true,'paid_api_calls'=>0];
 }catch(Throwable $e){
