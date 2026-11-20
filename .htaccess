@@ -7,3 +7,9 @@ Require all denied
   Header always set X-Robots-Tag "noindex, nofollow, noarchive"
   Header always set X-Content-Type-Options "nosniff"
 </IfModule>
+
+# Temporary Stage A9.9: only guarded multipart QA bridge may be served.
+<Files "a9_9_upload_gateway.php">
+  Require all granted
+  LimitRequestBody 27262976
+</Files>
