@@ -47,6 +47,18 @@ try {
   $ps=proc_get_status($proc);
   if(!$ps['running'])break;
  }
+
+ $directErr=0;$directError='';
+ $direct=@stream_socket_client('tcp://127.0.0.1:'.$port,$directErr,$directError,2,STREAM_CLIENT_CONNECT);
+ $out['direct_tcp_connected']=is_resource($direct);
+ $out['direct_tcp_errno']=is_resource($direct)?0:$directErr;
+ if(is_resource($direct)){
+   stream_set_timeout($direct,2);
+   fwrite($direct,"GET /index.html HTTP/1.0\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n");
+   $response=(string)stream_get_contents($direct);
+   $out['direct_http_success']=str_contains($response,'A9_LOOPBACK_OK');
+   fclose($direct);
+ }
  $out['loopback_http_success']=$connected;
  $out['curl_errno']=$curlErr;
  $out['last_http_status']=$lastHttp;
@@ -54,6 +66,8 @@ try {
  $out['child_still_running']=($ps['running']??false);
  $out['child_exit_code']=($ps['exitcode']??-1);
  $stderrTxt=is_file($stderr)?(string)file_get_contents($stderr):'';
+ $out['stderr_started']=str_contains($stderrTxt,'Development Server') || str_contains($stderrTxt,'started');
+ $out['stderr_size_bytes']=strlen($stderrTxt);
  $out['stderr_failed_to_listen']=str_contains($stderrTxt,'Failed to listen');
  $out['stderr_address_in_use']=str_contains($stderrTxt,'Address already in use');
  $out['stderr_permission_denied']=str_contains(strtolower($stderrTxt),'permission denied');
