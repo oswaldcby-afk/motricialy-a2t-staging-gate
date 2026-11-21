@@ -580,3 +580,13 @@
   }
   #a2t-tool .privacy-note { text-align: center; }
 }
+
+/* v1.0.8 launch standard: task-first first screen, without changing workspace controls. */
+#a2t-tool .a2t-hero { padding: 30px 0 23px; }
+#a2t-tool .a2t-hero h1 { margin: 13px 0 8px; font-size: clamp(38px, 4.2vw, 56px); }
+#a2t-tool .a2t-hero .hero-pills { margin-top: 15px; }
+@media (max-width:650px) {
+  #a2t-tool .a2t-hero { padding: 24px 0 20px; }
+  #a2t-tool .a2t-hero h1 { font-size: clamp(35px, 9vw, 44px); margin: 12px 0 9px; }
+  #a2t-tool .a2t-hero .hero-pills { margin-top: 15px; }
+}
