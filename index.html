@@ -20,6 +20,7 @@
 <script src="/assets/motricialy-tracking.js"></script>
 <script defer src="/assets/motricialy-site-chrome.js"></script>
 <script defer src="./assets/audio-to-text.js"></script>
+<script defer src="./assets/a2t-captions.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio to Text Converter","applicationCategory":"MultimediaApplication","operatingSystem":"Web browser","url":"https://motricialy.com/tools/audio-to-text/","description":"Transcribe completed audio files into editable text in a web browser, then export TXT or DOCX.","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Motricialy","url":"https://motricialy.com/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://motricialy.com/"},{"@type":"ListItem","position":2,"name":"Online Tools","item":"https://motricialy.com/online-tools/"},{"@type":"ListItem","position":3,"name":"Audio to Text","item":"https://motricialy.com/tools/audio-to-text/"}]}</script>
 </head>
@@ -99,6 +100,15 @@
           <p class="ai-disclosure">Clean and Summary each use one of your 2 daily AI text actions. Your selected text is sent to OpenAI. AI output may omit details; always compare it with the original.</p>
         </div>
         <div id="summary-panel" class="summary-panel" hidden><div class="summary-heading"><strong>AI summary &amp; action items</strong><button type="button" id="summary-copy" class="text-action">Copy</button></div><label for="summary-text" class="sr-only">AI summary and action items</label><textarea id="summary-text" data-clarity-mask="true" spellcheck="true" rows="7" aria-label="AI-generated summary" placeholder="Summary appears here"></textarea></div>
+        <details class="caption-workspace" id="caption-workspace">
+          <summary>Manual captions <span class="caption-tag">SRT / VTT</span></summary>
+          <p class="caption-intro">Create timed subtitles from your transcript. Play the audio and mark start/end times yourself; automatic timestamps and speaker detection are not available.</p>
+          <div class="caption-toolbar"><button type="button" id="caption-add">Add caption</button><button type="button" id="caption-split">Split transcript into captions</button></div>
+          <div id="caption-cues" class="caption-cues" data-clarity-mask="true"></div>
+          <div id="caption-status" class="caption-status" role="status" aria-live="polite"></div>
+          <div class="caption-downloads"><button type="button" id="caption-srt">Download SRT</button><button type="button" id="caption-vtt">Download VTT</button></div>
+          <p class="caption-disclosure">Timing and speaker labels are entered manually. Click Play on a caption to seek to its marked start time.</p>
+        </details>
         <div id="editor-status" class="status-line editor-status" role="status" aria-live="polite" hidden></div>
         <p class="editor-tip">Review names and numbers for accuracy.</p>
       </div>
