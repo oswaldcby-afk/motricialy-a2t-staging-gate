@@ -590,3 +590,174 @@
   #a2t-tool .a2t-hero h1 { font-size: clamp(35px, 9vw, 44px); margin: 12px 0 9px; }
   #a2t-tool .a2t-hero .hero-pills { margin-top: 15px; }
 }
+
+
+
+/* Audio to Text feature completion – first wave. Scoped to the existing workspace. */
+#a2t-tool .audio-preview[hidden],
+#a2t-tool .summary-panel[hidden],
+#a2t-tool .ai-tools[hidden],
+#a2t-tool .text-action[hidden] { display:none !important; }
+#a2t-tool .audio-preview {
+  margin: 12px 0 18px;
+  padding: 15px 15px 13px;
+  background: #faf8ff;
+  border: 1px solid #e6def5;
+  border-radius: 12px;
+}
+#a2t-tool .audio-preview > label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 740;
+  color: #45345e;
+}
+#a2t-tool .audio-preview audio {
+  display: block;
+  width: 100%;
+  height: 46px;
+}
+#a2t-tool .audio-playback-options {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 9px;
+  margin-top: 10px;
+  color: #706583;
+}
+#a2t-tool .audio-playback-options label {
+  font-size: 12px;
+  font-weight: 650;
+}
+#a2t-tool #playback-speed {
+  width: 82px;
+  min-height: 34px;
+  padding: 4px 7px;
+  border: 1px solid #d9cdf0;
+  border-radius: 8px;
+  background: #fff;
+  color: #4e3b71;
+  font-size: 13px;
+}
+#a2t-tool .recording-panel {
+  margin: 15px 0 10px;
+  padding: 0;
+  border-top: 1px solid #ede8f3;
+  border-bottom: 1px solid #ede8f3;
+}
+#a2t-tool .recording-panel summary {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  gap: 7px;
+  cursor: pointer;
+  color: #5a4387;
+  font-size: 14px;
+  font-weight: 730;
+  list-style: none;
+}
+#a2t-tool .recording-panel summary::-webkit-details-marker { display:none; }
+#a2t-tool .recording-panel summary::before {
+  content: "+";
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+}
+#a2t-tool .recording-panel[open] summary::before {content:"−";}
+#a2t-tool .recording-panel > p {
+  margin: 0 0 11px;
+  color: #80798f;
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+#a2t-tool .recording-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  align-items: center;
+  padding-bottom: 13px;
+}
+#a2t-tool .record-button {
+  border: 1px solid #dcd1f0;
+  border-radius: 9px;
+  background: #f7f2ff;
+  color: #604395;
+  padding: 9px 13px;
+  min-height: 40px;
+  font-size: 13px;
+  font-weight: 725;
+  transition: border-color .16s ease,background .16s ease;
+}
+#a2t-tool #record-start {background:#6f4be8;color:#fff;border-color:#6f4be8;}
+#a2t-tool .record-button:disabled {opacity:.45;cursor:not-allowed;}
+#a2t-tool .record-button:not(:disabled):hover {border-color:#9678dc;}
+#a2t-tool #record-timer {margin-left:auto;color:#53476b;font-size:13px;font-weight:720;font-variant-numeric:tabular-nums;}
+#a2t-tool .record-status {padding:0 0 13px;color:#69587f;font-size:12.5px;line-height:1.5;}
+#a2t-tool .record-status:empty {display:none;}
+#a2t-tool .quota-note {
+  margin: 15px 0 0;
+  text-align:center;
+  font-size: 12.5px;
+  color: #797186;
+  font-weight: 570;
+  line-height: 1.55;
+}
+#a2t-tool .privacy-details {margin: 10px 0 0;border-top: 1px solid #f0edf6;padding-top:10px;}
+#a2t-tool .privacy-details summary {font-size:12.5px;text-align:center;cursor:pointer;color:#75698a;list-style:none;}
+#a2t-tool .privacy-details summary::before {content:"▸";margin-right:6px;color:#7b57c6;}
+#a2t-tool .privacy-details[open] summary::before {content:"▾";}
+#a2t-tool .privacy-details p {margin:12px 0 0;color:#766f85;font-size:12.5px;line-height:1.7;}
+#a2t-tool .transcript-versions {display:flex;align-items:center;gap:5px;margin:-4px 0 9px;border-bottom:1px solid #eae4f1;}
+#a2t-tool .transcript-versions .version-tab {
+  position:relative;
+  border:0;
+  background:transparent;
+  color:#80758f;
+  padding:10px 13px 12px;
+  font-size:13.5px;
+  font-weight:700;
+  border-radius:8px 8px 0 0;
+}
+#a2t-tool .transcript-versions .version-tab.active {color:#6441bf;}
+#a2t-tool .transcript-versions .version-tab.active::after {
+  content:"";
+  position:absolute;bottom:-1px;left:7px;right:7px;height:3px;
+  border-radius:6px 6px 0 0;background:#6f4be8;
+}
+#a2t-tool .transcript-versions .version-tab:disabled {opacity:.42;cursor:not-allowed;}
+#a2t-tool .text-action {border:0;background:transparent;color:#7554c3;font-size:12.5px;font-weight:700;padding:6px;cursor:pointer;}
+#a2t-tool #reset-original {margin-left:auto;}
+#a2t-tool .transcript-version-note {color:#82788f;font-size:12.5px;margin:0 0 9px;}
+#a2t-tool .transcript-card .editor-actions {flex-wrap:wrap;gap:8px;}
+#a2t-tool .transcript-card .secondary-button {flex:1 0 auto;min-width:68px;}
+#a2t-tool .ai-tools {margin-top:20px;padding:16px 16px 14px;border:1px solid #e4daf5;border-radius:12px;background:linear-gradient(155deg,#faf8ff,#f5f0ff);}
+#a2t-tool .ai-tools-heading {display:flex;align-items:baseline;gap:9px;justify-content:space-between;flex-wrap:wrap;}
+#a2t-tool .ai-tools-heading strong {color:#423164;font-size:15px;}
+#a2t-tool .ai-tools-heading span {color:#867799;font-size:11px;}
+#a2t-tool .ai-actions {display:flex;flex-wrap:wrap;gap:9px;margin:12px 0;}
+#a2t-tool .ai-button {flex:1;min-width:145px;min-height:43px;border-radius:9px;padding:10px 13px;border:1px solid #cfc0ef;background:#fff;color:#6042a3;font-size:13.5px;font-weight:730;text-transform:none;cursor:pointer;}
+#a2t-tool .ai-button:not(:disabled):hover {background:#f4edff;border-color:#a98de2;}
+#a2t-tool .ai-button:disabled {opacity:.52;cursor:not-allowed;}
+#a2t-tool .ai-disclosure {margin:6px 0 0;color:#82788f;font-size:12px;line-height:1.65;}
+#a2t-tool .summary-panel {margin-top:17px;padding:15px;border:1px solid #e3d9f3;border-radius:12px;background:#fff;}
+#a2t-tool .summary-heading {display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+#a2t-tool .summary-heading strong {color:#3d3158;font-size:14px;}
+#a2t-tool #summary-text {display:block;min-height:160px;width:100%;resize:vertical;border:1px solid #e5e0ef;border-radius:8px;padding:12px;color:#3c3450;background:#fcfbff;line-height:1.7;font-size:14px;}
+#a2t-tool .audio-playback-options :focus-visible,
+#a2t-tool .recording-panel summary:focus-visible,
+#a2t-tool .record-button:focus-visible,
+#a2t-tool .version-tab:focus-visible,
+#a2t-tool .ai-button:focus-visible,
+#a2t-tool .text-action:focus-visible {outline:3px solid #9275e9;outline-offset:2px;}
+@media (max-width:650px){
+  #a2t-tool .audio-preview {padding:12px;margin-top:10px;}
+  #a2t-tool .recording-actions {gap:6px;}
+  #a2t-tool .record-button {padding:9px 10px;font-size:12px;}
+  #a2t-tool .transcript-versions .version-tab {padding:10px 9px 12px;font-size:12.5px;}
+  #a2t-tool .ai-button {min-width:120px;font-size:13px;}
+  #a2t-tool .ai-tools-heading span {font-size:11px;}
+}
+@media (prefers-reduced-motion:reduce){
+  #a2t-tool .record-button,
+  #a2t-tool .ai-button {transition:none!important;}
+}
