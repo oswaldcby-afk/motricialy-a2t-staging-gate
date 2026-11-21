@@ -91,7 +91,7 @@ JS;
   $newTag='/tools/text-to-speech/assets/index-tts-v29.js';
   $html=replaceOne($original['html'],$oldTag,$newTag,'HTML_ASSET_REF');
   $expectNew=[
-    'api'=>'cc7cad3860ea5813b785fc8328eea8a964f997250dfb87482631f413666a69fe',
+    'api'=>'2fdf2844f3bf77da6daac892bb7b6edaa8979f33bbf23e7aadb81eff29d648fd',
     'endpoint'=>'0d0facb7434f607f549c37bd1ad048393cce0866844f0cc97375aa115b10fede',
     'bundle'=>'42123b07f5a26a3a858922a91c68d2368376fcd9e65ff2a0d83a8cd8c214d163'
   ];
