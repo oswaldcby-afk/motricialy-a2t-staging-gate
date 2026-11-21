@@ -32,8 +32,8 @@
     <header class="a2t-hero">
       <div class="eyebrow"><span class="pulse-dot"></span> FREE BROWSER-BASED TOOL <span class="eyebrow-sep"></span> NO SIGN-UP</div>
       <h1>Audio to Text <span>Converter</span></h1>
-      <p class="hero-intro">Turn a completed audio file into editable text in a few clicks. Keep the original wording, correct it in the editor, and export the result when you're ready.</p>
-      <div class="hero-pills"><span>Up to 15 minutes</span><span>Completed audio files</span><span>TXT &amp; DOCX exports</span></div>
+      <p class="hero-intro">Upload audio or record with your microphone, then turn speech into editable text. Review the original, optionally create an AI-cleaned version or summary, and export your work.</p>
+      <div class="hero-pills"><span>Up to 15 minutes</span><span>Completed audio files</span><span>TXT, DOCX &amp; Markdown</span></div>
     </header>
 
     <section class="a2t-workspace" aria-label="Audio transcription workspace">
@@ -54,7 +54,7 @@
             <div class="audio-playback-options"><label for="playback-speed">Playback speed</label><select id="playback-speed"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></div>
           </div>
           <details id="recording-panel" class="recording-panel"><summary>Record with microphone</summary>
-            <p>Record on this device. Preview before you choose to transcribe.</p>
+            <p>Record on this device as WAV. Listen before you transcribe. Browser microphone permission is required.</p>
             <div class="recording-actions">
               <button type="button" class="record-button" id="record-start">Start recording</button>
               <button type="button" class="record-button" id="record-stop" disabled>Stop</button>
@@ -75,7 +75,7 @@
           <div id="status-line" class="status-line" role="status" aria-live="polite" hidden></div>
           <p class="quota-note" id="quota-note">Free: up to 2 files and 15 minutes per day.</p>
           <details class="privacy-details"><summary>Privacy and limits</summary>
-            <p>Audio is uploaded to Motricialy and sent to OpenAI for transcription only when you choose Transcribe. Files are processed temporarily; do not upload recordings you are not permitted to share. Up to 15 minutes per file, 24 MB maximum, subject to daily and shared usage limits.</p>
+            <p>Your selected audio stays on your device until you press Transcribe. Audio is then uploaded for temporary processing and sent to OpenAI. Using Make readable or Summary separately sends the selected transcript text to OpenAI. No account is required. Avoid recordings you do not have permission to share. File limit: 24 MB and 15 minutes; usage depends on daily and shared quotas.</p>
             <p id="shared-capacity" hidden></p>
           </details>
         </form>
@@ -96,7 +96,7 @@
         <div id="ai-tools" class="ai-tools" hidden>
           <div class="ai-tools-heading"><strong>AI text tools</strong><span>Optional · separate processing</span></div>
           <div class="ai-actions"><button type="button" id="clean-btn" class="ai-button">Make readable</button><button type="button" id="summary-btn" class="ai-button">Summary &amp; key points</button></div>
-          <p class="ai-disclosure">AI-generated text may omit details. Compare it with the original transcript; audio and text processing use separate shared allowances.</p>
+          <p class="ai-disclosure">Clean and Summary each use one of your 2 daily AI text actions. Your selected text is sent to OpenAI. AI output may omit details; always compare it with the original.</p>
         </div>
         <div id="summary-panel" class="summary-panel" hidden><div class="summary-heading"><strong>AI summary &amp; action items</strong><button type="button" id="summary-copy" class="text-action">Copy</button></div><label for="summary-text" class="sr-only">AI summary and action items</label><textarea id="summary-text" data-clarity-mask="true" spellcheck="true" rows="7" aria-label="AI-generated summary" placeholder="Summary appears here"></textarea></div>
         <div id="editor-status" class="status-line editor-status" role="status" aria-live="polite" hidden></div>
@@ -107,17 +107,17 @@
 
     <section class="a2t-seo" aria-labelledby="how-to">
       <div class="seo-heading"><span class="eyebrow small">HOW TO USE</span><h2 id="how-to">How to Use Motricialy Audio to Text</h2><p>Upload, review, and export. You stay in control of the final transcript.</p></div>
-      <div class="step-grid"><article><span class="step-index">01</span><h3>Choose a file</h3><p>Upload a supported completed audio recording of up to 15 minutes and 24 MB.</p></article><article><span class="step-index">02</span><h3>Transcribe and refine</h3><p>Select your language preference, add relevant vocabulary, and review the resulting editable text.</p></article><article><span class="step-index">03</span><h3>Export your transcript</h3><p>Copy the transcript or download it as TXT or DOCX for your notes, documents, or workflows.</p></article></div>
+      <div class="step-grid"><article><span class="step-index">01</span><h3>Choose a file</h3><p>Upload a completed audio file or record a WAV voice memo in your browser, up to 15 minutes and 24 MB.</p></article><article><span class="step-index">02</span><h3>Transcribe and refine</h3><p>Choose Auto-detect, English, Mandarin or English + Chinese. Check the transcript alongside the original recording.</p></article><article><span class="step-index">03</span><h3>Export your transcript</h3><p>Optionally create a clean version or AI summary, then export the edited text as TXT, DOCX or Markdown.</p></article></div>
       <div class="seo-heading features-head"><span class="eyebrow small">CAPABILITIES</span><h2>Key Features</h2></div>
-      <div class="features-grid"><article><h3>Audio file upload</h3><p>Work with common completed audio formats, subject to file validation.</p></article><article><h3>Speech recognition</h3><p>Convert spoken content into text using an AI transcription model.</p></article><article><h3>Language detection</h3><p>Automatically detect the language of your file, including English and Chinese.</p></article><article><h3>Terminology hints</h3><p>Provide expected names, acronyms, or specialized terms to guide recognition.</p></article><article><h3>Editable transcript</h3><p>Review and correct the output directly in your browser before exporting.</p></article><article><h3>TXT &amp; DOCX exports</h3><p>Download your edited transcription for later use, without creating an account.</p></article></div>
+      <div class="features-grid"><article><h3>Upload or record audio</h3><p>Upload a supported file or record with your microphone, then preview and seek through the audio before converting.</p></article><article><h3>Speech recognition</h3><p>Convert spoken content into text using an AI transcription model.</p></article><article><h3>Multilingual controls</h3><p>Choose automatic detection, English, Mandarin, or bilingual English–Chinese hints.</p></article><article><h3>Terminology hints</h3><p>Provide expected names, acronyms, or specialized terms to guide recognition.</p></article><article><h3>Original and clean versions</h3><p>Edit the transcript, generate an optional AI-cleaned version, and compare both without replacing the original.</p></article><article><h3>Summary and three exports</h3><p>Create optional AI notes and export the selected transcript as TXT, DOCX or Markdown.</p></article></div>
     </section>
     <section class="faq" aria-labelledby="faq-title"><div class="seo-heading"><span class="eyebrow small">FAQ</span><h2 id="faq-title">Frequently Asked Questions</h2></div>
       <details><summary>Is this audio to text converter free?</summary><p>There is a limited free allowance. Availability depends on current daily and overall service limits, which protect the shared transcription budget.</p></details>
-      <details><summary>Which audio formats can I upload?</summary><p>Supported completed recordings include MP3, WAV, M4A, FLAC, OGG, MP4 and some WebM files. Files must pass format, audio-track, size and duration checks. Incomplete browser recordings may be rejected.</p></details>
+      <details><summary>Which audio formats can I upload or record?</summary><p>Completed MP3, WAV, M4A, FLAC, OGG, MP4 and some WebM files can be uploaded when their audio stream passes validation. Browser microphone recording produces a WAV file; microphone support depends on your device and browser.</p></details>
       <details><summary>How long can a recording be?</summary><p>Each file can contain up to 15 minutes of verified audio and must be no larger than 24 MB.</p></details>
-      <details><summary>Can the tool transcribe Chinese or mixed-language speech?</summary><p>Automatic language detection can process multiple languages, including Chinese and English. Results depend on recording quality; always verify important details.</p></details>
-      <details><summary>Can I edit and save the transcript?</summary><p>Yes. Edit the transcript in the text box, copy it, or export it as TXT or a Word-compatible DOCX document.</p></details>
-      <details><summary>Are my uploaded files saved?</summary><p>The server processes temporary uploaded files for transcription. You should avoid submitting sensitive recordings that you are not authorized to share. Your edited transcript remains in this browser tab until you close or reload it.</p></details>
+      <details><summary>Can the tool transcribe Chinese or mixed-language speech?</summary><p>Yes. Choose Mandarin, English, or English + Chinese when those languages are expected. Automatic detection is also available. Always check names, numbers and code-switched speech.</p></details>
+      <details><summary>Can I edit, summarize and download a transcript?</summary><p>Yes. Edit the transcript, optionally generate a clearly labeled AI-cleaned version or summary, and export TXT, DOCX or Markdown. AI text operations have a separate daily limit.</p></details>
+      <details><summary>What happens to my audio and transcript?</summary><p>Audio is uploaded and sent to OpenAI when you choose Transcribe. Optional AI cleanup or summary sends your selected transcript text to OpenAI separately. The site handles uploads as temporary processing files; editable results remain in the current tab unless you download them. Avoid submitting recordings you are not authorized to share.</p></details>
     </section>
     <section class="related" aria-labelledby="related-title"><div class="seo-heading"><span class="eyebrow small">KEEP EXPLORING</span><h2 id="related-title">Related Tools</h2></div><div class="related-links"><a href="/tools/text-to-speech/">Text to Speech</a><a href="/tools/youtube-auto-caption-cleaner/">YouTube Auto Caption Cleaner</a><a href="/tools/srt-line-breaker/">SRT Line Breaker</a><a href="/tools/image-to-text/">Image to Text</a><a href="/tools/video-converter/">Video Converter</a><a href="/tools/online-pdf-editor/">Online PDF Editor</a></div></section>
   </div>
