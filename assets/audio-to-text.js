@@ -11,7 +11,7 @@ const summaryPanel=$('summary-panel'),summaryText=$('summary-text'),cleanBtn=$('
 const maxBytes=24000000,extensions=new Set(['mp3','wav','m4a','flac','ogg','mp4','webm']);
 let selected=null,objectUrl='',ready=false,busy=false,textReady=false,textBusy=false;
 let sourceText='',rawText='',cleanText='',activeVersion='raw',summaryValue='';
-let recorder=null,recordStream=null,recordChunks=[],recordTimer=null,recordStarted=0,recordTotal=0,recordMime='',recordExt='',recordOverflow=false;
+let recordStream=null,audioContext=null,microSource=null,microProcessor=null,microGain=null,pcmChunks=[],pcmSamples=0,recordTimer=null,recordStarted=0,recording=false,discarding=false,resamplePosition=0;
 const base=location.pathname.replace(/index\.html$/i,'').replace(/\/?$/,'/');
 const api=base+'api/';
 function statusAt(el,s,type=''){el.hidden=!s;el.textContent=s||'';el.className='status-line'+(el===editorStatus?' editor-status':'')+(type?' '+type:'');}
@@ -117,18 +117,15 @@ player.addEventListener('loadedmetadata',()=>{
   selected=null;updateButtons();
  }
 });
+const recordingRate=12000;
+const recordingMaxSamples=recordingRate*900;
 function stopStream(){
- if(recordStream){recordStream.getTracks().forEach(track=>{try{track.stop();}catch(e){}});recordStream=null;}
  if(recordTimer){clearInterval(recordTimer);recordTimer=null;}
-}
-function recordFormat(){
- if(typeof MediaRecorder==='undefined')return null;
- for(const item of [
-  {mime:'audio/webm;codecs=opus',ext:'webm'},
-  {mime:'audio/mp4',ext:'m4a'},
-  {mime:'audio/webm',ext:'webm'}
- ])if(MediaRecorder.isTypeSupported(item.mime))return item;
- return null;
+ if(microProcessor){try{microProcessor.onaudioprocess=null;microProcessor.disconnect();}catch(e){}microProcessor=null;}
+ if(microSource){try{microSource.disconnect();}catch(e){}microSource=null;}
+ if(microGain){try{microGain.disconnect();}catch(e){}microGain=null;}
+ if(audioContext){try{audioContext.close();}catch(e){}audioContext=null;}
+ if(recordStream){recordStream.getTracks().forEach(track=>{try{track.stop();}catch(e){}});recordStream=null;}
 }
 function timeLabel(ms){
  const s=Math.floor(Math.max(0,ms)/1000);
@@ -139,39 +136,84 @@ function recordingUi(active){
  recordStop.disabled=!active;
  recordDiscard.disabled=!selected&&!active;
 }
-function stopRecording(){
- if(recorder&&recorder.state!=='inactive')recorder.stop();
- else stopStream();
+function makeWav(){
+ const dataBytes=pcmSamples*2;
+ const data=new ArrayBuffer(44+dataBytes);
+ const view=new DataView(data);
+ function word(offset,value){view.setUint16(offset,value,true);}
+ function dword(offset,value){view.setUint32(offset,value,true);}
+ function chunk(offset,value){for(let i=0;i<4;i++)view.setUint8(offset+i,value.charCodeAt(i));}
+ chunk(0,'RIFF');dword(4,36+dataBytes);chunk(8,'WAVE');chunk(12,'fmt ');dword(16,16);
+ word(20,1);word(22,1);dword(24,recordingRate);dword(28,recordingRate*2);
+ word(32,2);word(34,16);chunk(36,'data');dword(40,dataBytes);
+ let pos=44;
+ for(const arr of pcmChunks){for(let i=0;i<arr.length;i++,pos+=2)view.setInt16(pos,arr[i],true);}
+ return new File([data],'recording.wav',{type:'audio/wav',lastModified:Date.now()});
+}
+function stopRecording(discard=false){
+ if(!recording){stopStream();return;}
+ recording=false;discarding=discard;
+ stopStream();
+ recordingUi(false);
+ if(discard){pcmChunks=[];pcmSamples=0;clearFile();$('record-timer').textContent='00:00';$('record-status').textContent='';return;}
+ if(pcmSamples<recordingRate){
+  pcmChunks=[];pcmSamples=0;$('record-status').textContent='Recording was too short. Try again.';return;
+ }
+ try{
+  const wav=makeWav();
+  pcmChunks=[];pcmSamples=0;
+  if(choose(wav)){
+   recordDiscard.disabled=false;
+   $('record-status').textContent='Recording ready. Listen before transcribing.';
+  }
+ }catch(e){
+  pcmChunks=[];pcmSamples=0;
+  $('record-status').textContent='Could not prepare the recording. Please try again.';
+ }
 }
 recordStart.addEventListener('click',async()=>{
- if(recorder&&recorder.state!=='inactive')return;
- const format=recordFormat();
- if(!format||!navigator.mediaDevices?.getUserMedia){
-  $('record-status').textContent='Microphone recording is not supported in this browser. Upload an audio file instead.';return;
+ if(recording)return;
+ const AudioEngine=window.AudioContext||window.webkitAudioContext;
+ if(!navigator.mediaDevices?.getUserMedia||!AudioEngine){
+  $('record-status').textContent='Microphone recording is unavailable in this browser. Upload an audio file instead.';return;
  }
  $('record-status').textContent='Requesting microphone access…';
  try{
   recordStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true},video:false});
-  recorder=new MediaRecorder(recordStream,{mimeType:format.mime});
-  recordMime=format.mime;recordExt=format.ext;recordChunks=[];recordTotal=0;recordOverflow=false;
-  recorder.ondataavailable=e=>{
-   if(e.data&&e.data.size){recordChunks.push(e.data);recordTotal+=e.data.size;}
-   if(recordTotal>maxBytes){recordOverflow=true;stopRecording();}
-  };
-  recorder.onerror=()=>{$('record-status').textContent='Recording failed. Please try uploading a file.';stopStream();recordingUi(false);};
-  recorder.onstop=()=>{
-   stopStream();recordingUi(false);
-   if(recordOverflow){$('record-status').textContent='Recording exceeded 24 MB. Try a shorter recording.';return;}
-   const blob=new Blob(recordChunks,{type:recordMime});recordChunks=[];
-   if(blob.size<128){$('record-status').textContent='Recording was too short. Try again.';return;}
-   const ext=recordExt||'webm';
-   const file=new File([blob],'recording.'+ext,{type:recordMime,lastModified:Date.now()});
-   if(choose(file)){
-    recordDiscard.disabled=false;
-    $('record-status').textContent='Recording ready. Listen before transcribing.';
+  try{audioContext=new AudioEngine({latencyHint:'interactive'});}catch(e){audioContext=new AudioEngine();}
+  if(!audioContext.createScriptProcessor)throw new Error('Capture unsupported');
+  await audioContext.resume();
+  microSource=audioContext.createMediaStreamSource(recordStream);
+  microProcessor=audioContext.createScriptProcessor(4096,1,1);
+  microGain=audioContext.createGain();microGain.gain.value=0;
+  pcmChunks=[];pcmSamples=0;resamplePosition=0;discarding=false;
+  const step=audioContext.sampleRate/recordingRate;
+  if(!Number.isFinite(step)||step<1)throw new Error('Invalid audio sample rate');
+  microProcessor.onaudioprocess=e=>{
+   if(!recording||discarding)return;
+   const input=e.inputBuffer.getChannelData(0);
+   const cap=Math.ceil(input.length/step)+2;
+   const out=new Int16Array(cap);
+   let count=0;
+   let pos=resamplePosition;
+   while(pos<input.length&&pcmSamples+count<recordingMaxSamples){
+    const start=Math.max(0,Math.floor(pos));
+    const finish=Math.min(input.length,Math.max(start+1,Math.ceil(pos+step)));
+    let sum=0;for(let i=start;i<finish;i++)sum+=input[i];
+    const level=Math.max(-1,Math.min(1,sum/(finish-start)));
+    out[count++]=Math.round(level<0?level*32768:level*32767);
+    pos+=step;
+   }
+   resamplePosition=pos-input.length;
+   if(count>0){pcmChunks.push(out.subarray(0,count));pcmSamples+=count;}
+   if(pcmSamples>=recordingMaxSamples){
+    stopRecording(false);$('record-status').textContent='Maximum recording length reached (15 minutes).';
    }
   };
-  recorder.start(1000);
+  microSource.connect(microProcessor);
+  microProcessor.connect(microGain);
+  microGain.connect(audioContext.destination);
+  recording=true;
   recordStarted=Date.now();
   $('record-timer').textContent='00:00';
   $('record-status').textContent='Recording…';
@@ -179,18 +221,20 @@ recordStart.addEventListener('click',async()=>{
   recordTimer=setInterval(()=>{
    const ms=Date.now()-recordStarted;
    $('record-timer').textContent=timeLabel(ms);
-   if(ms>=900000){stopRecording();$('record-status').textContent='15-minute recording limit reached.';}
+   if(ms>=900000){stopRecording(false);$('record-status').textContent='Maximum recording length reached (15 minutes).';}
   },500);
  }catch(e){
-  stopStream();recordingUi(false);
-  $('record-status').textContent=(e&&e.name==='NotAllowedError')?
-   'Microphone permission was denied. You can upload a file instead.':
-   'Unable to start recording. Try uploading an audio file.';
+  recording=false;stopStream();recordingUi(false);
+  $('record-status').textContent=(e?.name==='NotAllowedError')?
+   'Microphone permission was denied. You can upload an audio file instead.':
+   'Recording is not supported on this device. Upload an audio file instead.';
  }
 });
-recordStop.addEventListener('click',stopRecording);
-recordDiscard.addEventListener('click',()=>{if(recorder&&recorder.state!=='inactive'){recordOverflow=true;stopRecording();}else clearFile();$('record-timer').textContent='00:00';$('record-status').textContent='';recordDiscard.disabled=true;});
-window.addEventListener('pagehide',()=>{try{stopRecording();}catch(e){}disposePreview();},{once:true});
+recordStop.addEventListener('click',()=>stopRecording(false));
+recordDiscard.addEventListener('click',()=>stopRecording(true));
+window.addEventListener('pagehide',()=>{
+ recording=false;stopStream();disposePreview();pcmChunks=[];pcmSamples=0;
+},{once:true});
 function download(data,filename,mime){
  const blob=new Blob([data],{type:mime});const u=URL.createObjectURL(blob);
  const a=document.createElement('a');a.href=u;a.download=filename;a.hidden=true;
