@@ -21,6 +21,7 @@
 <script defer src="/assets/motricialy-site-chrome.js"></script>
 <script defer src="./assets/audio-to-text.js"></script>
 <script defer src="./assets/a2t-captions.js"></script>
+<script defer src="./assets/a2t-video.js"></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio to Text Converter","applicationCategory":"MultimediaApplication","operatingSystem":"Web browser","url":"https://motricialy.com/tools/audio-to-text/","description":"Transcribe completed audio files into editable text in a web browser, then export TXT or DOCX.","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Motricialy","url":"https://motricialy.com/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://motricialy.com/"},{"@type":"ListItem","position":2,"name":"Online Tools","item":"https://motricialy.com/online-tools/"},{"@type":"ListItem","position":3,"name":"Audio to Text","item":"https://motricialy.com/tools/audio-to-text/"}]}</script>
 </head>
@@ -48,6 +49,16 @@
             <p id="drop-subtext">Drop a file here, or <span class="link-look">browse files</span></p>
             <div class="file-specs">MP3, WAV, M4A, FLAC, OGG, MP4, WebM · Max 24 MB</div>
           </div>
+          <details class="video-extract-panel" id="video-extract-panel">
+            <summary>Extract audio from video <span class="video-local-label">On-device</span></summary>
+            <p>Choose a video with an audio track. Extraction runs in your browser; only the resulting audio is uploaded if you click Transcribe. Supported codecs depend on your browser.</p>
+            <input id="video-file-input" type="file" accept=".mp4,.m4v,.mov,.mkv,.webm,video/*" class="sr-only">
+            <div class="video-extract-controls"><button type="button" id="video-choose">Choose video</button><button type="button" id="video-extract" disabled>Extract audio</button></div>
+            <div id="video-file-label" data-clarity-mask="true" class="video-file-label"></div>
+            <progress id="video-progress" value="0" max="100" aria-label="Audio extraction progress" hidden></progress>
+            <div id="video-extract-status" role="status" aria-live="polite" class="video-extract-status"></div>
+            <p class="video-limit-note">Video up to 500 MB and 15 minutes. Extracted WAV must be under 24 MB. This operation does not consume an AI allowance.</p>
+          </details>
           <div id="file-summary" data-clarity-mask="true" class="file-summary" hidden><div class="file-glyph">♫</div><div class="file-details"><strong id="file-name"></strong><span id="file-size"></span></div><button type="button" id="clear-file" class="icon-button" aria-label="Remove selected file">×</button></div>
           <div id="audio-preview" class="audio-preview" hidden>
             <label for="audio-player">Listen to your recording</label>
