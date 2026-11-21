@@ -5,7 +5,16 @@ if(strpos((string)@file_get_contents(__DIR__.'/.htaccess'),'Require all denied')
 if(getenv('A2T_ENABLE_LIVE')==='1')exit(92);
 $dir='/home/u342033576/.motricialy-a2t-stage-a9';
 $priv=$dir.'/a9-11-transport-private.pem';
-if(!is_dir($dir)||is_link($dir)||(fileperms($dir)&0777)!==0700||file_exists($priv))exit(93);
+if(!is_dir($dir)||is_link($dir)||(fileperms($dir)&0777)!==0700)exit(93);
+if(is_file($priv)&&!is_link($priv)&&(fileperms($priv)&0777)===0600){
+ $k=openssl_pkey_get_private((string)file_get_contents($priv));
+ if(!$k)exit(94);
+ $pub=openssl_pkey_get_details($k);
+ echo json_encode(['stage'=>'A9.11','status'=>'TRANSPORT_PUBLIC_READY',
+ 'public_pem_b64'=>base64_encode($pub['key']),'fingerprint'=>hash('sha256',$pub['key']),
+ 'private_key_mode'=>'0600','outside_webroot'=>true,'paid_api_calls'=>0],JSON_UNESCAPED_SLASHES).PHP_EOL;
+ exit;
+}
 $key=openssl_pkey_new(['private_key_bits'=>3072,'private_key_type'=>OPENSSL_KEYTYPE_RSA]);
 if($key===false||!openssl_pkey_export($key,$pem))exit(94);
 $fp=@fopen($priv,'x');if(!$fp)exit(95);
