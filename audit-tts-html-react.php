@@ -81,3 +81,5 @@ checkT('no_deprecated_player_script',$scriptLoaded('tts-v216-players.js')&&!$scr
 checkT('no_deprecated_status_script',$scriptLoaded('tts-v216-result-status.js')&&!$scriptLoaded('tts-v210-result-status.js'));
 $failed=array_keys(array_filter($results,fn($v)=>!$v));$out=['audit'=>'read-only-production','html_bytes'=>strlen($html),'react_bytes'=>strlen($bundle),'react_src'=>$bundleRef,'html_faq_titles'=>array_column($rawFaq,0),'react_faq_titles'=>array_column($normFaq,0),'counts'=>['faqs'=>count($rawFaq),'howto'=>count(cardsT($html,'how-card')),'features'=>count(cardsT($html,'feature-card')),'related'=>count($rawRelated)],'checks'=>$results,'failed'=>$failed,'scripts'=>$refs,'styles'=>$styles];
 echo json_encode($out,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES)."\n";
+if($failed)exit(3); // Fail future releases if raw HTML and React diverge.
+
