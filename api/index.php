@@ -8,21 +8,31 @@ declare(strict_types=1);
 header('Cache-Control: no-store, max-age=0');
 header('X-Content-Type-Options: nosniff');
 $uri=(string)parse_url($_SERVER['REQUEST_URI']??'',PHP_URL_PATH);
-$mark=strpos($uri,'/api/');
-if($mark===false){http_response_code(404);exit;}
-$route=trim(substr($uri,$mark+5),'/');
-if(!in_array($route,['config','transcribe','export/docx','process'],true)){
+$prefix='/tools/audio-to-text/api/';
+if(!str_starts_with($uri,$prefix)){http_response_code(404);exit;}
+$route=trim(substr($uri,strlen($prefix)),'/');
+if(!in_array($route,['config','transcribe','export/docx','process','capabilities'],true)){
  http_response_code(404);exit;
 }
 if(($_SERVER['HTTP_HOST']??'')!=='motricialy.com'){
  http_response_code(404);exit;
 }
-if($route==='process'){
- header('Content-Type: application/json; charset=utf-8');
- http_response_code(503);
- echo '{"detail":"Advanced text processing is not enabled in this release"}';exit;
-}
 $root='/home/u342033576/.motricialy-a2t-stage-a9';
+// A capability discovery route is read-only and never calls a paid provider.
+if($route==='capabilities'){
+ if(($_SERVER['REQUEST_METHOD']??'GET')!=='GET'){http_response_code(405);exit;}
+ $textFlag=$root.'/a9-15-text-enabled.flag';
+ $publicFlag=$root.'/a9-11-public-enabled.flag';
+ $textOn=is_file($textFlag)&&!is_link($textFlag)&&((fileperms($textFlag)&0777)===0600)
+   &&trim((string)@file_get_contents($textFlag))==='enabled';
+ $publicOn=is_file($publicFlag)&&!is_link($publicFlag)&&((fileperms($publicFlag)&0777)===0600)
+   &&trim((string)@file_get_contents($publicFlag))==='enabled';
+ $enabled=$textOn&&$publicOn&&!is_file($root.'/a9-11-public-paused.flag');
+ header('Content-Type: application/json; charset=utf-8');
+ echo json_encode(['text_processing_ready'=>$enabled,'max_text_characters'=>12000,
+   'max_text_operations_daily'=>2,'clean_and_summary_are_separate_metered_operations'=>true],JSON_UNESCAPED_SLASHES);
+ exit;
+}
 $private=$root.'/app-a9-7-full/private-server';
 $entry=$root.'/app-a9-7-full/test-public/tools/audio-to-text/api/index.php';
 if(!is_file($entry)||is_link($entry)||!is_file($private.'/bootstrap.php')){
@@ -51,6 +61,19 @@ $enabledPath=$root.'/a9-11-public-enabled.flag';
 $enabled=$validSecret($enabledPath,7,20)&&trim((string)file_get_contents($enabledPath))==='enabled';
 $paused=is_file($root.'/a9-11-public-paused.flag');
 $active=($qa||$enabled)&&!$paused;
+// Text processing is separately gated from audio transcription.
+if($route==='process'){
+ $textFlag=$root.'/a9-15-text-enabled.flag';
+ $publicTextOn=is_file($textFlag)&&!is_link($textFlag)&&((fileperms($textFlag)&0777)===0600)
+   &&trim((string)@file_get_contents($textFlag))==='enabled';
+ if(!$qa&&!$publicTextOn){
+  header('Content-Type: application/json; charset=utf-8');
+  http_response_code(503);echo '{"detail":"AI text tools are not enabled yet"}';exit;
+ }
+ if(($_SERVER['REQUEST_METHOD']??'')!=='POST'){http_response_code(405);exit;}
+ $bytes=(int)($_SERVER['CONTENT_LENGTH']??0);
+ if($bytes<=0||$bytes>45000){http_response_code(413);header('Content-Type: application/json');echo '{"detail":"Text exceeds the current processing limit"}';exit;}
+}
 $cfg=$root.'/a9-11-mysql-production.json';
 $key=$root.'/a9-11-openai-key.private';
 if($active&&$validSecret($cfg,50,3000)&&$validSecret($key,30,500)&&strlen($hmac)===64){
