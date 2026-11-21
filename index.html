@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audio to Text Converter — Free Online Transcription | Motricialy</title>
+<meta name="description" content="Convert audio files to editable text online. Upload MP3, WAV, M4A and other supported files, review the transcript, then download TXT or DOCX. Free, simple and no sign-up required.">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<link rel="canonical" href="https://motricialy.com/tools/audio-to-text/">
+<link rel="icon" href="/favicon.ico">
+<link rel="stylesheet" href="./assets/audio-to-text.css">
+<script defer src="/assets/motricialy-site-chrome.js"></script>
+<script defer src="./assets/audio-to-text.js"></script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Audio to Text Converter","applicationCategory":"MultimediaApplication","operatingSystem":"Web browser","url":"https://motricialy.com/tools/audio-to-text/","description":"Transcribe completed audio files into editable text in a web browser, then export TXT or DOCX.","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Motricialy","url":"https://motricialy.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://motricialy.com/"},{"@type":"ListItem","position":2,"name":"Online Tools","item":"https://motricialy.com/online-tools/"},{"@type":"ListItem","position":3,"name":"Audio to Text","item":"https://motricialy.com/tools/audio-to-text/"}]}</script>
+</head>
+<body>
+<div data-motricialy-site-header></div>
+<main id="a2t-tool">
+  <div class="a2t-backdrop" aria-hidden="true"><span class="orb orb-one"></span><span class="orb orb-two"></span></div>
+  <div class="a2t-shell">
+    <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/online-tools/">Online Tools</a><span aria-hidden="true">/</span><span aria-current="page">Audio to Text</span></nav>
+    <header class="a2t-hero">
+      <div class="eyebrow"><span class="pulse-dot"></span> FREE BROWSER-BASED TOOL <span class="eyebrow-sep"></span> NO SIGN-UP</div>
+      <h1>Audio to Text <span>Converter</span></h1>
+      <p class="hero-intro">Turn a completed audio file into editable text in a few clicks. Keep the original wording, correct it in the editor, and export the result when you're ready.</p>
+      <div class="hero-pills"><span>Up to 15 minutes</span><span>Completed audio files</span><span>TXT &amp; DOCX exports</span></div>
+    </header>
+
+    <section class="a2t-workspace" aria-label="Audio transcription workspace">
+      <div class="work-card upload-card">
+        <div class="card-top"><div><span class="section-kicker">STEP 01</span><h2>Upload audio</h2></div><div class="status-chip" id="service-badge">Checking service</div></div>
+        <form id="upload-form" novalidate>
+          <input type="file" id="audio-file" name="file" accept=".mp3,.wav,.m4a,.mp4,.flac,.ogg,.webm,audio/*" class="sr-only">
+          <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-describedby="drop-subtext" aria-label="Choose an audio file or drop a file here">
+            <div class="drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></div>
+            <strong id="drop-title">Drop your audio file here</strong>
+            <p id="drop-subtext">or <span class="link-look">browse files</span> on your device</p>
+            <div class="file-specs">MP3, WAV, M4A, FLAC, OGG, completed WebM or MP4 · max 24 MB</div>
+          </div>
+          <div id="file-summary" class="file-summary" hidden><div class="file-glyph">♫</div><div class="file-details"><strong id="file-name"></strong><span id="file-size"></span></div><button type="button" id="clear-file" class="icon-button" aria-label="Remove selected file">×</button></div>
+          <div class="form-group">
+            <label for="language">Audio language</label>
+            <select id="language" name="language"><option value="auto">Detect automatically (recommended)</option><option value="en">English</option></select>
+          </div>
+          <details class="advanced"><summary>Transcription hints <span class="optional">Optional</span></summary><div class="advanced-body">
+            <label for="keywords">Names or terms to recognize</label><textarea id="keywords" rows="2" maxlength="800" placeholder="Motricialy; project names; technical terms"></textarea><p class="field-help">Separate terms with semicolons. Hints improve recognition but aren't guaranteed.</p>
+            <label for="context">Recording context</label><textarea id="context" rows="2" maxlength="600" placeholder="e.g. Product discussion about an image editor"></textarea>
+          </div></details>
+          <button type="submit" class="primary-cta" id="transcribe-btn" disabled><span class="cta-star">✦</span><span id="transcribe-label">Checking availability...</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12h14m-6-6 6 6-6 6"/></svg></button>
+          <p class="privacy-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Audio is sent for processing only when you click Transcribe. No account needed.</p>
+        </form>
+      </div>
+
+      <div class="work-card transcript-card">
+        <div class="card-top"><div><span class="section-kicker">STEP 02</span><h2>Review transcript</h2></div><span class="editor-pill">Editable</span></div>
+        <div class="transcript-inner"><div class="editor-toolbar"><span class="editor-icon">≡</span><span id="editor-caption">Transcript editor</span><span id="word-count" class="word-count">0 words</span></div>
+          <label for="transcript" class="sr-only">Editable transcript</label><textarea id="transcript" spellcheck="true" aria-label="Editable transcript" placeholder="Your transcript will appear here. You can also paste and edit text directly."></textarea>
+        </div>
+        <div class="editor-actions"><button type="button" class="secondary-button" id="copy-btn">Copy text</button><button type="button" class="secondary-button" id="txt-btn">Download TXT</button><button type="button" class="secondary-button" id="docx-btn">Download DOCX</button></div>
+        <p class="editor-tip">Tip: Double-check names, numbers and specialist terms against the recording.</p>
+      </div>
+    </section>
+    <div class="status-line" role="status" aria-live="polite" id="status-line">Checking transcription availability...</div>
+
+    <section class="a2t-seo" aria-labelledby="how-to">
+      <div class="seo-heading"><span class="eyebrow small">THE SIMPLE WORKFLOW</span><h2 id="how-to">How to convert audio to text</h2><p>Upload, review, and export. You stay in control of the final transcript.</p></div>
+      <div class="step-grid"><article><span class="step-index">01</span><h3>Choose a file</h3><p>Upload a supported completed audio recording of up to 15 minutes and 24 MB.</p></article><article><span class="step-index">02</span><h3>Transcribe and refine</h3><p>Select your language preference, add relevant vocabulary, and review the resulting editable text.</p></article><article><span class="step-index">03</span><h3>Export your transcript</h3><p>Copy the transcript or download it as TXT or DOCX for your notes, documents, or workflows.</p></article></div>
+      <div class="seo-heading features-head"><span class="eyebrow small">MADE FOR EVERYDAY TASKS</span><h2>Useful transcription features</h2></div>
+      <div class="features-grid"><article><span>◎</span><h3>Audio file upload</h3><p>Work with common completed audio formats, subject to file validation.</p></article><article><span>✦</span><h3>Speech recognition</h3><p>Convert spoken content into text using an AI transcription model.</p></article><article><span>文</span><h3>Language detection</h3><p>Automatically detect the language of your file, including English and Chinese.</p></article><article><span>⌁</span><h3>Terminology hints</h3><p>Provide expected names, acronyms, or specialized terms to guide recognition.</p></article><article><span>≡</span><h3>Editable transcript</h3><p>Review and correct the output directly in your browser before exporting.</p></article><article><span>↓</span><h3>TXT &amp; DOCX exports</h3><p>Download your edited transcription for later use, without creating an account.</p></article></div>
+    </section>
+    <section class="faq" aria-labelledby="faq-title"><div class="seo-heading"><span class="eyebrow small">COMMON QUESTIONS</span><h2 id="faq-title">Audio to Text FAQ</h2></div>
+      <details><summary>Is this audio to text converter free?</summary><p>There is a limited free allowance. Availability depends on current daily and overall service limits, which protect the shared transcription budget.</p></details>
+      <details><summary>Which audio formats can I upload?</summary><p>Supported completed recordings include MP3, WAV, M4A, FLAC, OGG, MP4 and some WebM files. Files must pass format, audio-track, size and duration checks. Incomplete browser recordings may be rejected.</p></details>
+      <details><summary>How long can a recording be?</summary><p>Each file can contain up to 15 minutes of verified audio and must be no larger than 24 MB.</p></details>
+      <details><summary>Can the tool transcribe Chinese or mixed-language speech?</summary><p>Automatic language detection can process multiple languages, including Chinese and English. Results depend on recording quality; always verify important details.</p></details>
+      <details><summary>Can I edit and save the transcript?</summary><p>Yes. Edit the transcript in the text box, copy it, or export it as TXT or a Word-compatible DOCX document.</p></details>
+      <details><summary>Are my uploaded files saved?</summary><p>The server processes temporary uploaded files for transcription. You should avoid submitting sensitive recordings that you are not authorized to share. Your edited transcript remains in this browser tab until you close or reload it.</p></details>
+    </section>
+    <section class="related" aria-labelledby="related-title"><div class="seo-heading"><h2 id="related-title">Explore more Motricialy tools</h2></div><div class="related-links"><a href="/tools/text-to-speech/">Text to Speech</a><a href="/tools/online-pdf-editor/">Online PDF Editor</a><a href="/tools/online-image-editor/">Online Image Editor</a><a href="/tools/online-excel-editor/">Online Excel Editor</a><a href="/tools/resize-image/">Resize Image</a><a href="/tools/add-border-to-image/">Add Border to Image</a></div></section>
+  </div>
+</main>
+<div data-motricialy-site-footer></div>
+</body>
+</html>

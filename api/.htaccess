@@ -1,0 +1,14 @@
+Options -Indexes
+RewriteEngine On
+RewriteRule ^(config|transcribe|process|export/docx)/?$ index.php [L,QSA,NC]
+php_value upload_max_filesize 24M
+php_value post_max_size 25M
+php_value max_file_uploads 1
+php_value max_execution_time 180
+php_value max_input_time 180
+php_value memory_limit 256M
+LimitRequestBody 27262976
+<IfModule mod_headers.c>
+ Header always set Cache-Control "no-store, max-age=0"
+ Header always set X-Content-Type-Options "nosniff"
+</IfModule>

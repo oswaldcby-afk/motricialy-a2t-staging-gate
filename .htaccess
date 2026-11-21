@@ -1,9 +1,6 @@
-# Hostinger / Motricialy Stage A9 isolation gate.
-# This directory is a closed test fixture, not an application or public landing page.
 Options -Indexes
-Require all denied
 <IfModule mod_headers.c>
-  Header always set Cache-Control "no-store, max-age=0"
-  Header always set X-Robots-Tag "noindex, nofollow, noarchive"
-  Header always set X-Content-Type-Options "nosniff"
+ Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+ Header always set X-Content-Type-Options "nosniff"
+ Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
