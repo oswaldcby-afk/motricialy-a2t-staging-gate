@@ -1,6 +1,6 @@
 Options -Indexes
 RewriteEngine On
-RewriteRule ^(config|transcribe|process|capabilities|export/docx)/?$ index.php [L,QSA,NC]
+RewriteRule ^(config|transcribe|process|capabilities|quota|export/docx)/?$ index.php [L,QSA,NC]
 php_value upload_max_filesize 24M
 php_value post_max_size 25M
 php_value max_file_uploads 1
