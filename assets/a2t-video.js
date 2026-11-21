@@ -4,10 +4,10 @@ const root=document.getElementById('video-extract-panel');
 if(!root)return;
 const $=id=>document.getElementById(id);
 const chooser=$('video-file-input'),pick=$('video-choose'),extract=$('video-extract');
-const label=$('video-file-label'),status=$('video-extract-status'),progress=$('video-progress');
+const label=$('video-file-label'),status=$('video-extract-status'),progress=$('video-progress'),cancel=$('video-cancel');
 const allowed=new Set(['mp4','m4v','mov','mkv','webm']);
 const maxVideoBytes=500*1024*1024;
-let source=null,busy=false;
+let source=null,busy=false,controller=null;
 function setStatus(message,error=false){status.textContent=message;status.classList.toggle('error',error);}
 pick.addEventListener('click',()=>{if(!busy)chooser.click();});
 chooser.addEventListener('change',()=>{
@@ -21,9 +21,10 @@ chooser.addEventListener('change',()=>{
  label.textContent=file.name+' · '+(file.size/1048576).toFixed(1)+' MB';
  extract.disabled=false;setStatus('Ready to extract audio locally.');
 });
+cancel.addEventListener('click',()=>{if(controller&&!controller.signal.aborted){controller.abort();setStatus('Stopping extraction…');}});
 extract.addEventListener('click',async()=>{
  if(!source||busy)return;
- busy=true;extract.disabled=true;pick.disabled=true;progress.value=0;progress.hidden=false;
+ busy=true;controller=new AbortController();extract.disabled=true;pick.disabled=true;cancel.hidden=false;progress.value=0;progress.hidden=false;
  setStatus('Preparing local audio extraction…');
  const file=source;
  try{
@@ -31,7 +32,7 @@ extract.addEventListener('click',async()=>{
   const result=await extractVideoAudio(file,percent=>{
    progress.value=percent;
    setStatus('Extracting audio on this device: '+percent+'%');
-  });
+  },controller.signal);
   if(!(result.file instanceof File)||result.file.size>24_000_000)
     throw new Error('The extracted audio exceeds the upload limit.');
   // The existing file-upload flow remains the only path that can submit data.
@@ -42,6 +43,6 @@ extract.addEventListener('click',async()=>{
  }catch(e){
   progress.hidden=true;
   setStatus(e instanceof Error?e.message:'Video audio extraction failed in this browser.',true);
- }finally{busy=false;extract.disabled=!source;pick.disabled=false;}
+ }finally{busy=false;controller=null;cancel.hidden=true;extract.disabled=!source;pick.disabled=false;}
 });
 })();
