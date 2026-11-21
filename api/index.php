@@ -11,7 +11,7 @@ $uri=(string)parse_url($_SERVER['REQUEST_URI']??'',PHP_URL_PATH);
 $prefix='/tools/audio-to-text/api/';
 if(!str_starts_with($uri,$prefix)){http_response_code(404);exit;}
 $route=trim(substr($uri,strlen($prefix)),'/');
-if(!in_array($route,['config','transcribe','export/docx','process','capabilities'],true)){
+if(!in_array($route,['config','transcribe','export/docx','process','capabilities','quota'],true)){
  http_response_code(404);exit;
 }
 if(($_SERVER['HTTP_HOST']??'')!=='motricialy.com'){
@@ -103,5 +103,33 @@ if(getenv('A2T_ENABLE_LIVE')!=='1'){
  putenv('A2T_PAUSE_AI=1');
 }
 putenv('A2T_PRIVATE_PATH='.$private);
+// Read-only per-visitor quota reporting; no AI provider calls or user content stored.
+if($route==='quota'){
+ if(($_SERVER['REQUEST_METHOD']??'GET')!=='GET'){http_response_code(405);exit;}
+ if(getenv('A2T_ENABLE_LIVE')!=='1'){
+  http_response_code(503);header('Content-Type: application/json');echo '{"detail":"Service temporarily unavailable"}';exit;
+ }
+ define('A2T_ENTRY',true);
+ require_once $private.'/bootstrap.php';
+ a2t_headers();
+ try{
+  $identities=a2t_subjects();
+  $pdo=a2t_pdo();
+  $q=$pdo->prepare('SELECT audio_count,audio_seconds,text_count FROM a2t_daily_quota WHERE day_utc=UTC_DATE() AND subject_hash IN (?,?)');
+  $q->execute($identities);
+  $count=0;$seconds=0;$textCount=0;
+  foreach($q->fetchAll() as $u){
+   $count=max($count,(int)$u['audio_count']);
+   $seconds=max($seconds,(int)$u['audio_seconds']);
+   $textCount=max($textCount,(int)$u['text_count']);
+  }
+  a2t_json(200,[
+   'files_remaining'=>max(0,2-$count),
+   'minutes_remaining'=>round(max(0,900-$seconds)/60,1),
+   'text_operations_remaining'=>max(0,2-$textCount),
+   'daily_file_limit'=>2,'daily_minutes_limit'=>15,'daily_text_operations_limit'=>2
+  ]);
+ }catch(Throwable $e){a2t_fail(503,'Quota information temporarily unavailable');}
+}
 $_SERVER['REQUEST_URI']='/tools/audio-to-text/api/'.$route;
 require $entry;
