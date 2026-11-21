@@ -104,6 +104,7 @@ function clearFile(){
  message('');updateButtons();
 }
 $('clear-file').addEventListener('click',clearFile);
+window.addEventListener('a2t:prepared-audio',event=>{const file=event.detail?.file;if(file instanceof File)choose(file);});
 drop.addEventListener('click',()=>fileInput.click());
 drop.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fileInput.click();}});
 fileInput.addEventListener('change',()=>{if(fileInput.files&&fileInput.files[0])choose(fileInput.files[0]);});
