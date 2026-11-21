@@ -376,3 +376,202 @@
     transform: none !important;
   }
 }
+
+
+/* ================================================================
+   Audio to Text · Minimal workspace typography (2026-11-21)
+   Only the two functional cards and their local status regions.
+   The Tool Page Standard landing sections below are unchanged.
+   ================================================================ */
+#a2t-tool .a2t-workspace .card-top {
+  align-items: center;
+  margin-bottom: 19px;
+}
+#a2t-tool .a2t-workspace .card-top h2 {
+  margin: 0;
+  color: #302447;
+  font-size: 23px;
+  font-weight: 760;
+  line-height: 1.3;
+  letter-spacing: -.025em;
+}
+#a2t-tool .upload-card .drop-zone {
+  min-height: 205px;
+  padding: 23px 17px;
+}
+#a2t-tool .upload-card .drop-icon {
+  width: 45px;
+  height: 45px;
+  padding: 11px;
+  margin-bottom: 14px;
+}
+#a2t-tool .upload-card .drop-zone strong {
+  color: #33264c;
+  font-size: 18px;
+  font-weight: 760;
+  line-height: 1.4;
+}
+#a2t-tool .upload-card .drop-zone p {
+  margin: 7px 0 4px;
+  color: #726b82;
+  font-size: 14px;
+  line-height: 1.55;
+}
+#a2t-tool .upload-card .drop-zone .link-look {
+  font-weight: 760;
+}
+#a2t-tool .upload-card .file-specs {
+  max-width: 370px;
+  margin-top: 12px;
+  color: #8c849b;
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+#a2t-tool .file-details strong {
+  font-size: 14px;
+  font-weight: 740;
+}
+#a2t-tool .file-details span { font-size: 12px; }
+#a2t-tool .icon-button {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  font-size: 23px;
+  line-height: 1;
+}
+#a2t-tool .form-group { margin: 19px 0 15px; }
+#a2t-tool .form-group label,
+#a2t-tool .advanced-body label {
+  margin-bottom: 8px;
+  color: #4b405e;
+  font-size: 14px;
+  font-weight: 700;
+}
+#a2t-tool .form-group select {
+  min-height: 49px;
+  padding: 11px 13px;
+  color: #3b334e;
+  font-size: 15px;
+  line-height: 1.5;
+}
+#a2t-tool .advanced { padding-top: 15px; }
+#a2t-tool .advanced summary {
+  color: #594776;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+#a2t-tool .advanced .optional {
+  color: #9790a3;
+  font-size: 12px;
+}
+#a2t-tool .advanced-body textarea {
+  padding: 12px 13px;
+  color: #3c3450;
+  font-size: 15px;
+  line-height: 1.55;
+}
+#a2t-tool .advanced-body .field-help {
+  color: #8b8498;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+#a2t-tool .primary-cta {
+  min-height: 54px;
+  padding: 14px 18px;
+  font-size: 16px;
+  font-weight: 760;
+  line-height: 1.45;
+}
+#a2t-tool .primary-cta svg { width: 19px; height: 19px; }
+#a2t-tool .privacy-note {
+  margin: 14px 0 0;
+  color: #898397;
+  font-size: 12px;
+  line-height: 1.5;
+}
+#a2t-tool .privacy-note svg {
+  width: 15px;
+  height: 15px;
+}
+#a2t-tool .status-line {
+  margin: 13px 0 0;
+  min-height: 0;
+  color: #6d597f;
+  font-size: 13.5px;
+  line-height: 1.55;
+  font-weight: 560;
+  text-align: left;
+}
+#a2t-tool .status-line[hidden] { display: none !important; }
+#a2t-tool .status-line.error { color: #b03d4a; }
+#a2t-tool .status-line.success { color: #257b53; }
+#a2t-tool .transcript-card .transcript-inner {
+  min-height: 337px;
+  border-color: #e6e0ef;
+}
+#a2t-tool .transcript-card .editor-toolbar {
+  height: 37px;
+  padding: 0 15px;
+  background: #fbfaff;
+  border-bottom-color: #f1edf6;
+  justify-content: flex-end;
+}
+#a2t-tool .transcript-card .word-count {
+  margin-left: auto;
+  color: #81778e;
+  font-size: 12px;
+  font-weight: 560;
+}
+#a2t-tool .transcript-card #transcript {
+  min-height: 300px;
+  padding: 17px 18px;
+  color: #352e44;
+  font-size: 16px;
+  line-height: 1.75;
+}
+#a2t-tool .transcript-card #transcript::placeholder {
+  color: #9a94a6;
+}
+#a2t-tool .transcript-card .editor-actions {
+  margin-top: 14px;
+  gap: 10px;
+}
+#a2t-tool .transcript-card .secondary-button {
+  min-height: 45px;
+  padding: 11px 17px;
+  background: #faf8ff;
+  color: #59417d;
+  font-size: 14px;
+  font-weight: 730;
+  line-height: 1.45;
+}
+#a2t-tool .transcript-card .secondary-button:hover { background: #f1ebff; }
+#a2t-tool .transcript-card .editor-tip {
+  margin: 13px 0 0;
+  color: #8b8497;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+@media (max-width: 650px) {
+  #a2t-tool .a2t-workspace .card-top h2 { font-size: 21px; }
+  #a2t-tool .upload-card .drop-zone { min-height: 183px; padding: 19px 13px; }
+  #a2t-tool .upload-card .drop-zone strong { font-size: 17px; }
+  #a2t-tool .upload-card .drop-zone p { font-size: 14px; }
+  #a2t-tool .upload-card .file-specs { font-size: 12px; }
+  #a2t-tool .form-group select,
+  #a2t-tool .advanced-body textarea { font-size: 16px; }
+  #a2t-tool .transcript-card #transcript {
+    min-height: 255px;
+    padding: 16px;
+    font-size: 16px;
+  }
+  #a2t-tool .transcript-card .secondary-button {
+    min-width: 0;
+    padding: 11px 9px;
+    font-size: 14px;
+  }
+  #a2t-tool .privacy-note { text-align: center; }
+}
