@@ -28,39 +28,41 @@
 
     <section class="a2t-workspace" aria-label="Audio transcription workspace">
       <div class="work-card upload-card">
-        <div class="card-top"><div><span class="section-kicker">STEP 01</span><h2>Upload audio</h2></div><div class="status-chip" id="service-badge">Checking service</div></div>
+        <div class="card-top"><h2>Upload audio</h2></div>
         <form id="upload-form" novalidate>
           <input type="file" id="audio-file" name="file" accept=".mp3,.wav,.m4a,.mp4,.flac,.ogg,.webm,audio/*" class="sr-only">
           <div class="drop-zone" id="drop-zone" role="button" tabindex="0" aria-describedby="drop-subtext" aria-label="Choose an audio file or drop a file here">
             <div class="drop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></div>
-            <strong id="drop-title">Drop your audio file here</strong>
-            <p id="drop-subtext">or <span class="link-look">browse files</span> on your device</p>
-            <div class="file-specs">MP3, WAV, M4A, FLAC, OGG, completed WebM or MP4 · max 24 MB</div>
+            <strong id="drop-title">Choose an audio file</strong>
+            <p id="drop-subtext">Drop a file here, or <span class="link-look">browse files</span></p>
+            <div class="file-specs">MP3, WAV, M4A, FLAC, OGG, MP4, WebM · Max 24 MB</div>
           </div>
           <div id="file-summary" class="file-summary" hidden><div class="file-glyph">♫</div><div class="file-details"><strong id="file-name"></strong><span id="file-size"></span></div><button type="button" id="clear-file" class="icon-button" aria-label="Remove selected file">×</button></div>
           <div class="form-group">
-            <label for="language">Audio language</label>
-            <select id="language" name="language"><option value="auto">Detect automatically (recommended)</option><option value="en">English</option></select>
+            <label for="language">Language</label>
+            <select id="language" name="language"><option value="auto">Auto-detect</option><option value="en">English</option></select>
           </div>
-          <details class="advanced"><summary>Transcription hints <span class="optional">Optional</span></summary><div class="advanced-body">
-            <label for="keywords">Names or terms to recognize</label><textarea id="keywords" rows="2" maxlength="800" placeholder="Motricialy; project names; technical terms"></textarea><p class="field-help">Separate terms with semicolons. Hints improve recognition but aren't guaranteed.</p>
-            <label for="context">Recording context</label><textarea id="context" rows="2" maxlength="600" placeholder="e.g. Product discussion about an image editor"></textarea>
+          <details class="advanced"><summary>Recognition hints <span class="optional">Optional</span></summary><div class="advanced-body">
+            <label for="keywords">Names and terms</label><textarea id="keywords" rows="2" maxlength="800" placeholder="Motricialy; project names; technical terms"></textarea><p class="field-help">Separate terms with semicolons. Hints improve recognition but aren't guaranteed.</p>
+            <label for="context">Context</label><textarea id="context" rows="2" maxlength="600" placeholder="e.g. Product discussion about an image editor"></textarea>
           </div></details>
-          <button type="submit" class="primary-cta" id="transcribe-btn" disabled><span class="cta-star">✦</span><span id="transcribe-label">Checking availability...</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12h14m-6-6 6 6-6 6"/></svg></button>
-          <p class="privacy-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Audio is sent for processing only when you click Transcribe. No account needed.</p>
+          <button type="submit" class="primary-cta" id="transcribe-btn" disabled><span id="transcribe-label">Transcribe audio</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12h14m-6-6 6 6-6 6"/></svg></button>
+          <div id="status-line" class="status-line" role="status" aria-live="polite" hidden></div>
+          <p class="privacy-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Audio uploads only when you click Transcribe.</p>
         </form>
       </div>
 
       <div class="work-card transcript-card">
-        <div class="card-top"><div><span class="section-kicker">STEP 02</span><h2>Review transcript</h2></div><span class="editor-pill">Editable</span></div>
-        <div class="transcript-inner"><div class="editor-toolbar"><span class="editor-icon">≡</span><span id="editor-caption">Transcript editor</span><span id="word-count" class="word-count">0 words</span></div>
-          <label for="transcript" class="sr-only">Editable transcript</label><textarea id="transcript" spellcheck="true" aria-label="Editable transcript" placeholder="Your transcript will appear here. You can also paste and edit text directly."></textarea>
+        <div class="card-top"><h2>Transcript</h2></div>
+        <div class="transcript-inner"><div class="editor-toolbar"><span id="word-count" class="word-count">0 words</span></div>
+          <label for="transcript" class="sr-only">Editable transcript</label><textarea id="transcript" spellcheck="true" aria-label="Editable transcript" placeholder="Your transcript will appear here. You can also paste text to edit."></textarea>
         </div>
-        <div class="editor-actions"><button type="button" class="secondary-button" id="copy-btn">Copy text</button><button type="button" class="secondary-button" id="txt-btn">Download TXT</button><button type="button" class="secondary-button" id="docx-btn">Download DOCX</button></div>
-        <p class="editor-tip">Tip: Double-check names, numbers and specialist terms against the recording.</p>
+        <div class="editor-actions"><button type="button" class="secondary-button" id="copy-btn">Copy</button><button type="button" class="secondary-button" id="txt-btn">TXT</button><button type="button" class="secondary-button" id="docx-btn">DOCX</button></div>
+        <div id="editor-status" class="status-line editor-status" role="status" aria-live="polite" hidden></div>
+        <p class="editor-tip">Review names and numbers for accuracy.</p>
       </div>
     </section>
-    <div class="status-line" role="status" aria-live="polite" id="status-line">Checking transcription availability...</div>
+
 
     <section class="a2t-seo" aria-labelledby="how-to">
       <div class="seo-heading"><span class="eyebrow small">HOW TO USE</span><h2 id="how-to">How to Use Motricialy Audio to Text</h2><p>Upload, review, and export. You stay in control of the final transcript.</p></div>
