@@ -151,7 +151,7 @@ function makeWav(){
  return new File([data],'recording.wav',{type:'audio/wav',lastModified:Date.now()});
 }
 function stopRecording(discard=false){
- if(!recording){stopStream();return;}
+ if(!recording){stopStream();if(discard){clearFile();$('record-timer').textContent='00:00';$('record-status').textContent='';recordDiscard.disabled=true;}return;}
  recording=false;discarding=discard;
  stopStream();
  recordingUi(false);
