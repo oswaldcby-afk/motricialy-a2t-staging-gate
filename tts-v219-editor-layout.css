@@ -1,0 +1,68 @@
+/* Motricialy TTS v2.19: equal-height desktop editing layout and header CTA.
+   No DOM moves: the existing mirrored Generate button keeps its React click and disabled state. */
+@media (min-width: 901px) {
+  .tts-page.studio-page .voice-studio .studio-workspace { align-items: stretch; }
+  .tts-page.studio-page .voice-studio .studio-script:has(> .studio-writing) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 600px !important;
+  }
+  .tts-page.studio-page .voice-studio .studio-script:has(> .studio-writing) > h2 {
+    display: flex;
+    align-items: center;
+    min-height: 53px;
+    margin-bottom: 0;
+    padding-right: 235px;
+  }
+  .tts-page.studio-page .voice-studio .studio-script:has(> .studio-writing) > .studio-writing {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    min-height: 380px !important;
+    padding: 12px 0 16px !important;
+    align-items: stretch;
+  }
+  .tts-page.studio-page .voice-studio .studio-script:has(> .studio-writing) > .studio-writing > textarea {
+    box-sizing: border-box;
+    display: block;
+    flex: 1 1 auto !important;
+    align-self: stretch;
+    height: auto !important;
+    min-height: 380px !important;
+    max-height: none !important;
+    resize: none;
+  }
+  .tts-page.studio-page .voice-studio .studio-script:has(> .studio-writing) > .tts-v25-inline-action {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center;
+    margin: 12px 0 0 !important;
+    gap: 10px;
+    min-height: 20px;
+  }
+  .tts-page.studio-page .voice-studio .studio-script:has(> .studio-writing) > .tts-v25-inline-action > .studio-generate {
+    position: absolute !important;
+    top: 23px !important;
+    right: 28px !important;
+    z-index: 2;
+    min-width: 202px !important;
+    min-height: 46px !important;
+    padding: 10px 15px !important;
+    border-radius: 11px !important;
+    font-size: 15px !important;
+  }
+  .tts-page.studio-page .voice-studio .studio-script:has(> .studio-writing) > .tts-v25-inline-action > .tts-v25-inline-quota {
+    font-size: 13px !important;
+    line-height: 1.55;
+    min-width: 0;
+  }
+}
+@media (min-width: 901px) and (max-width: 1120px) {
+  .tts-page.studio-page .voice-studio .studio-script:has(> .studio-writing) > h2 { padding-right: 205px; }
+  .tts-page.studio-page .voice-studio .studio-script:has(> .studio-writing) > .tts-v25-inline-action > .studio-generate {
+    min-width: 185px !important;
+    right: 22px !important;
+    font-size: 14px !important;
+  }
+}
+/* Mobile keeps the Generate control after settings; no cramped headline CTA. */
