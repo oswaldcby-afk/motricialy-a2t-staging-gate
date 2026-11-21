@@ -92,7 +92,7 @@ JS;
   $html=replaceOne($original['html'],$oldTag,$newTag,'HTML_ASSET_REF');
   $expectNew=[
     'api'=>'2fdf2844f3bf77da6daac892bb7b6edaa8979f33bbf23e7aadb81eff29d648fd',
-    'endpoint'=>'0d0facb7434f607f549c37bd1ad048393cce0866844f0cc97375aa115b10fede',
+    'endpoint'=>'d8084c0ced3ba881ae4c26fb10f392b09bebedbbf01230ec93a86875c4968615',
     'bundle'=>'42123b07f5a26a3a858922a91c68d2368376fcd9e65ff2a0d83a8cd8c214d163'
   ];
   foreach(['api'=>$realtime,'endpoint'=>$index,'bundle'=>$bundle] as $name=>$code){
