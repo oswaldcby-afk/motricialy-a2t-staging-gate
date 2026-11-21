@@ -9,7 +9,7 @@ const quota=$('quota-note'),capacity=$('shared-capacity'),tools=$('ai-tools');
 const originalTab=$('tab-original'),cleanTab=$('tab-clean'),resetBtn=$('reset-original');
 const summaryPanel=$('summary-panel'),summaryText=$('summary-text'),cleanBtn=$('clean-btn'),summaryBtn=$('summary-btn');
 const maxBytes=24000000,extensions=new Set(['mp3','wav','m4a','flac','ogg','mp4','webm']);
-let selected=null,objectUrl='',ready=false,busy=false,textReady=false,textBusy=false;
+let selected=null,objectUrl='',ready=false,busy=false,textReady=false,textBusy=false,filesLeft=null,textLeft=null;
 let sourceText='',rawText='',cleanText='',activeVersion='raw',summaryValue='';
 let recordStream=null,audioContext=null,microSource=null,microProcessor=null,microGain=null,pcmChunks=[],pcmSamples=0,recordTimer=null,recordStarted=0,recording=false,discarding=false,resamplePosition=0;
 const base=location.pathname.replace(/index\.html$/i,'').replace(/\/?$/,'/');
@@ -19,10 +19,10 @@ function message(s,type){statusAt(status,s,type);}
 function editMessage(s,type){statusAt(editorStatus,s,type);}
 function fmtMB(bytes){return (bytes/1048576).toFixed(2)+' MB';}
 function updateButtons(){
- btn.disabled=!ready||!selected||busy;
+ btn.disabled=!ready||!selected||busy||filesLeft===0;
  label.textContent=busy?'Transcribing…':'Transcribe audio';
  btn.setAttribute('aria-busy',String(busy));
- const canText=ready&&textReady&&!busy&&!textBusy&&editor.value.trim().length>0;
+ const canText=ready&&textReady&&!busy&&!textBusy&&textLeft!==0&&editor.value.trim().length>0;
  cleanBtn.disabled=!canText;
  summaryBtn.disabled=!canText;
  cleanBtn.textContent=textBusy&&cleanBtn.dataset.running==='true'?'Cleaning…':'Make readable';
@@ -251,6 +251,18 @@ function friendlyError(code,detail){
  if(code===503)return 'Processing is temporarily unavailable.';
  return 'Processing failed. Please try again later.';
 }
+async function refreshQuota(){
+ try{
+  const resp=await fetch(api+'quota',{credentials:'same-origin',cache:'no-store',headers:{Accept:'application/json'}});
+  if(!resp.ok)return;
+  const d=await jsonReply(resp);
+  if(typeof d.files_remaining==='number'&&typeof d.minutes_remaining==='number'&&typeof d.text_operations_remaining==='number'){
+   filesLeft=d.files_remaining;textLeft=d.text_operations_remaining;
+   quota.textContent='Today: '+filesLeft+' file'+(filesLeft===1?'':'s')+' / '+d.minutes_remaining.toFixed(1)+' min left · AI actions: '+textLeft;
+  }
+ }catch(e){/* Quota display is best-effort; server-side enforcement remains authoritative. */}
+ updateButtons();
+}
 async function checkAvailability(){
  try{
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),10000);
@@ -268,7 +280,7 @@ async function checkAvailability(){
    }
   }else message('Transcription is temporarily unavailable.','error');
   quota.textContent='Free: up to 2 files / 15 minutes each day. Each file: max 24 MB.';
-  if(ready)await checkTextTools();
+  if(ready){await checkTextTools();await refreshQuota();}
  }catch(e){ready=false;message('Transcription is temporarily unavailable.','error');}
  updateButtons();
 }
@@ -302,6 +314,7 @@ form.addEventListener('submit',async e=>{
   sourceText=result.text;rawText=result.text;cleanText='';activeVersion='raw';
   editor.value=rawText;dismissSummary();wordCount();updateVersions();
   message('Transcript ready.','success');
+  await refreshQuota();
   editor.focus({preventScroll:true});
  }catch(err){
   if(err?.name==='AbortError')message('Request timed out. The server may still be processing; do not retry immediately.','error');
@@ -337,7 +350,7 @@ async function processText(mode,button){
  }catch(err){
   if(err?.name==='AbortError')editMessage('Processing timed out. Do not retry immediately.','error');
   else editMessage(friendlyError(err?.status,err?.detail),'error');
- }finally{textBusy=false;cleanBtn.dataset.running='false';summaryBtn.dataset.running='false';updateButtons();}
+ }finally{textBusy=false;cleanBtn.dataset.running='false';summaryBtn.dataset.running='false';await refreshQuota();updateButtons();}
 }
 cleanBtn.addEventListener('click',()=>processText('clean',cleanBtn));
 summaryBtn.addEventListener('click',()=>processText('summary',summaryBtn));
