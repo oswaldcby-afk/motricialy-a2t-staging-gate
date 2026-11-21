@@ -52,4 +52,25 @@ if($out['source_hashes_match']){
    }
  }
 }
+if($out['source_hashes_match']){
+ $b=(string)file_get_contents($root.'/bootstrap.php');
+ $ls=preg_split('/\\r\\n|\\r|\\n/',$b);
+ foreach($ls as $i=>$l){if(str_contains($l,'function a2t_ready(')){
+   $out['a2t_ready_source_excerpt']=implode("\\n",array_slice($ls,$i,min(75,count($ls)-$i)));
+   break;
+ }}
+ $entry=dirname($root).'/test-public/tools/audio-to-text/api/index.php';
+ if(is_file($entry)&&hash_file('sha256',$entry)==='3f8d989955e8a5aab9e017bcacc3b128547af21f67fae6fd33802fc2dc7d7dc0'){
+   $s=(string)file_get_contents($entry);
+   $out['entrypoint_contract']=[
+     'includes_media_direct_preparation'=>str_contains($s,'a2t_prepare_direct('),
+     'includes_provider_request'=>str_contains($s,'a2t_transcribe_provider('),
+     'includes_ledger_reservation'=>str_contains($s,'->reserve('),
+     'includes_ledger_settlement'=>str_contains($s,'->settle('),
+     'includes_uncertain_reservation'=>str_contains($s,'->markUncertain('),
+     'mentions_ffmpeg'=>stripos($s,'ffmpeg')!==false,
+     'mentions_upload'=>str_contains($s,'$_FILES')
+   ];
+ }
+}
 echo json_encode($out,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES).PHP_EOL;
