@@ -83,7 +83,7 @@ PHPDATA;
   $index=replaceOne($index,"tts_settle(\$db,\$receipt['id'],\$success?\$cost:null,\$success);","tts_settle(\$db,\$receipt['id'],(\$success||\$fidelityFailed)?\$cost:null,\$success||\$fidelityFailed);",'budget-known');
   $index=replaceOne($index,"tts_json(200,['mode'=>'openai-verified-api'","if(\$fidelityFailed)tts_json(502,['error'=>'The generated speech did not match your script. No incorrect audio was delivered. Please try again.']);\n        tts_json(200,['mode'=>'openai-verified-api'",'failure-message');
   $newSplit=<<<'JS'
-function k4(s,A=360){const out=[];let rest=String(s).trim();for(;rest.length;){if(rest.length<=A){out.push(rest);break}let cut=0;const head=rest.slice(0,A+1);const re=/[.!?。！？][)”’"']?\s+|\n{2,}/gu;for(let m;(m=re.exec(head));){const end=m.index+m[0].length;if(end<=A&&end>=A*.45)cut=end}if(!cut){const breaks=[rest.lastIndexOf(" ",A),rest.lastIndexOf("\n",A),rest.lastIndexOf("\t",A)];const best=Math.max(...breaks);cut=best>=A*.7?best:A}const u=rest.charCodeAt(cut-1),v=rest.charCodeAt(cut);if(u>=55296&&u<=56319&&v>=56320&&v<=57343)cut--;const part=rest.slice(0,cut).trim();if(part)out.push(part);rest=rest.slice(cut).trimStart()}return out}function P4(
+function k4(s,A=180){const out=[];let rest=String(s).trim();for(;rest.length;){if(rest.length<=A){out.push(rest);break}const minCut=Math.ceil(rest.length/Math.max(1,12-out.length));let cut=0,lastSentence=0;const head=rest.slice(0,A+1);const re=/[.!?。！？][)”’"']?\s+|\n{2,}/gu;for(let m;(m=re.exec(head));){const end=m.index+m[0].length;if(end<=A){lastSentence=end;if(end>=Math.max(A*.7,minCut))cut=end}}if(!cut&&rest.length<=A+60&&lastSentence>=minCut&&rest.length-lastSentence<=A*(11-out.length))cut=lastSentence;if(!cut){const breaks=[rest.lastIndexOf(" ",A),rest.lastIndexOf("\n",A),rest.lastIndexOf("\t",A)];const best=Math.max(...breaks);cut=best>=Math.max(A*.7,minCut)?best:A}const u=rest.charCodeAt(cut-1),v=rest.charCodeAt(cut);if(u>=55296&&u<=56319&&v>=56320&&v<=57343)cut--;const part=rest.slice(0,cut).trim();if(part)out.push(part);rest=rest.slice(cut).trimStart()}return out}function P4(
 JS;
   $bundle=preg_replace_callback('~function k4\(s,A=180\)\{.*?return _\}function P4\(~s',fn($m)=>$newSplit,$original['bundle'],1,$n);
   if($n!==1||!is_string($bundle))throw new RuntimeException('BUNDLE_SPLIT_PATCH');
@@ -93,7 +93,7 @@ JS;
   $expectNew=[
     'api'=>'2fdf2844f3bf77da6daac892bb7b6edaa8979f33bbf23e7aadb81eff29d648fd',
     'endpoint'=>'d8084c0ced3ba881ae4c26fb10f392b09bebedbbf01230ec93a86875c4968615',
-    'bundle'=>'42123b07f5a26a3a858922a91c68d2368376fcd9e65ff2a0d83a8cd8c214d163'
+    'bundle'=>'93f761506869d8abf04bfb18c2a196016969b1650be13a86f4bc64a412f6b161'
   ];
   foreach(['api'=>$realtime,'endpoint'=>$index,'bundle'=>$bundle] as $name=>$code){
     $hash=hash('sha256',$code);
