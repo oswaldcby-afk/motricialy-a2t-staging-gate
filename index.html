@@ -48,9 +48,24 @@
             <div class="file-specs">MP3, WAV, M4A, FLAC, OGG, MP4, WebM · Max 24 MB</div>
           </div>
           <div id="file-summary" data-clarity-mask="true" class="file-summary" hidden><div class="file-glyph">♫</div><div class="file-details"><strong id="file-name"></strong><span id="file-size"></span></div><button type="button" id="clear-file" class="icon-button" aria-label="Remove selected file">×</button></div>
+          <div id="audio-preview" class="audio-preview" hidden>
+            <label for="audio-player">Listen to your recording</label>
+            <audio id="audio-player" controls preload="metadata" aria-label="Selected audio preview"></audio>
+            <div class="audio-playback-options"><label for="playback-speed">Playback speed</label><select id="playback-speed"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option><option value="2">2×</option></select></div>
+          </div>
+          <details id="recording-panel" class="recording-panel"><summary>Record with microphone</summary>
+            <p>Record on this device. Preview before you choose to transcribe.</p>
+            <div class="recording-actions">
+              <button type="button" class="record-button" id="record-start">Start recording</button>
+              <button type="button" class="record-button" id="record-stop" disabled>Stop</button>
+              <button type="button" class="record-button" id="record-discard" disabled>Discard</button>
+              <span id="record-timer" role="timer">00:00</span>
+            </div>
+            <div id="record-status" class="record-status" role="status" aria-live="polite"></div>
+          </details>
           <div class="form-group">
             <label for="language">Language</label>
-            <select id="language" name="language"><option value="auto">Auto-detect</option><option value="en">English</option></select>
+            <select id="language" name="language"><option value="auto">Auto-detect</option><option value="en">English</option><option value="zh">Chinese (Mandarin)</option><option value="mixed">English + Chinese</option></select>
           </div>
           <details class="advanced"><summary>Recognition hints <span class="optional">Optional</span></summary><div class="advanced-body">
             <label for="keywords">Names and terms</label><textarea id="keywords" data-clarity-mask="true" rows="2" maxlength="800" placeholder="Motricialy; project names; technical terms"></textarea><p class="field-help">Separate terms with semicolons. Hints improve recognition but aren't guaranteed.</p>
@@ -58,16 +73,32 @@
           </div></details>
           <button type="submit" class="primary-cta" id="transcribe-btn" disabled><span id="transcribe-label">Transcribe audio</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m5 12h14m-6-6 6 6-6 6"/></svg></button>
           <div id="status-line" class="status-line" role="status" aria-live="polite" hidden></div>
-          <p class="privacy-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Audio uploads only when you click Transcribe.</p>
+          <p class="quota-note" id="quota-note">Free: up to 2 files and 15 minutes per day.</p>
+          <details class="privacy-details"><summary>Privacy and limits</summary>
+            <p>Audio is uploaded to Motricialy and sent to OpenAI for transcription only when you choose Transcribe. Files are processed temporarily; do not upload recordings you are not permitted to share. Up to 15 minutes per file, 24 MB maximum, subject to daily and shared usage limits.</p>
+            <p id="shared-capacity" hidden></p>
+          </details>
         </form>
       </div>
 
       <div class="work-card transcript-card">
         <div class="card-top"><h2>Transcript</h2></div>
+        <div class="transcript-versions" role="tablist" aria-label="Transcript versions">
+          <button type="button" id="tab-original" role="tab" aria-selected="true" aria-controls="transcript" class="version-tab active">Transcript</button>
+          <button type="button" id="tab-clean" role="tab" aria-selected="false" aria-controls="transcript" class="version-tab" disabled>Clean version</button>
+          <button type="button" id="reset-original" class="text-action" hidden>Reset transcript</button>
+        </div>
+        <div id="transcript-version-note" class="transcript-version-note">Your editable transcript</div>
         <div class="transcript-inner"><div class="editor-toolbar"><span id="word-count" class="word-count">0 words</span></div>
           <label for="transcript" class="sr-only">Editable transcript</label><textarea id="transcript" data-clarity-mask="true" spellcheck="true" aria-label="Editable transcript" placeholder="Your transcript will appear here. You can also paste text to edit."></textarea>
         </div>
-        <div class="editor-actions"><button type="button" class="secondary-button" id="copy-btn">Copy</button><button type="button" class="secondary-button" id="txt-btn">TXT</button><button type="button" class="secondary-button" id="docx-btn">DOCX</button></div>
+        <div class="editor-actions"><button type="button" class="secondary-button" id="copy-btn">Copy</button><button type="button" class="secondary-button" id="txt-btn">TXT</button><button type="button" class="secondary-button" id="docx-btn">DOCX</button><button type="button" class="secondary-button" id="md-btn">Markdown</button></div>
+        <div id="ai-tools" class="ai-tools" hidden>
+          <div class="ai-tools-heading"><strong>AI text tools</strong><span>Optional · separate processing</span></div>
+          <div class="ai-actions"><button type="button" id="clean-btn" class="ai-button">Make readable</button><button type="button" id="summary-btn" class="ai-button">Summary &amp; key points</button></div>
+          <p class="ai-disclosure">AI-generated text may omit details. Compare it with the original transcript; audio and text processing use separate shared allowances.</p>
+        </div>
+        <div id="summary-panel" class="summary-panel" hidden><div class="summary-heading"><strong>AI summary &amp; action items</strong><button type="button" id="summary-copy" class="text-action">Copy</button></div><label for="summary-text" class="sr-only">AI summary and action items</label><textarea id="summary-text" data-clarity-mask="true" spellcheck="true" rows="7" aria-label="AI-generated summary" placeholder="Summary appears here"></textarea></div>
         <div id="editor-status" class="status-line editor-status" role="status" aria-live="polite" hidden></div>
         <p class="editor-tip">Review names and numbers for accuracy.</p>
       </div>
