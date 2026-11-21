@@ -42,4 +42,14 @@ if($out['source_hashes_match']){
   }
  }
 }
+if($out['source_hashes_match']){
+ $src=(string)file_get_contents($root.'/provider.php');
+ $lines=preg_split('/\\r\\n|\\r|\\n/',$src);
+ foreach(['a2t_transcribe_provider','a2t_http','a2t_multipart_text'] as $fn){
+   foreach($lines as $i=>$line)if(str_contains($line,'function '.$fn.'(')){
+     $out['source_excerpt'][$fn]=implode("\\n",array_slice($lines,$i,min(85,count($lines)-$i)));
+     break;
+   }
+ }
+}
 echo json_encode($out,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES).PHP_EOL;
