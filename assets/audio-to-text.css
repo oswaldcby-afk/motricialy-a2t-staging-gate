@@ -867,3 +867,13 @@
 #a2t-tool .video-extract-status:empty{display:none;}
 #a2t-tool .video-extract-panel .video-limit-note{font-size:11.5px;color:#95899f;margin:5px 0 13px;}
 #a2t-tool .video-extract-panel :focus-visible{outline:3px solid #9977ed;outline-offset:3px;}
+
+
+#a2t-tool #video-cancel[hidden]{display:none!important;}
+#a2t-tool .video-extract-controls #video-cancel{
+ background:#fff;
+ color:#8c4157;
+ border-color:#dcbcc6;
+ flex:0 1 95px;
+}
+#a2t-tool .video-extract-controls #video-cancel:hover:not(:disabled){background:#fff4f5;}
