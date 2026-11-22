@@ -1,0 +1,6 @@
+node_modules/
+private-data/
+*.wav
+*.mp3
+*.mp4
+*.onnx

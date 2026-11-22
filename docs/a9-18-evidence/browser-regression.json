@@ -1,0 +1,284 @@
+{
+  "scope": "LOCAL Chrome regression; APIs mocked; shared chrome/tracking stubbed; mobile viewport NOT physical phone",
+  "checks": [
+    {
+      "name": "desktop first frame under 5s",
+      "pass": true
+    },
+    {
+      "name": "desktop no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "desktop no paid request on load",
+      "pass": true
+    },
+    {
+      "name": "desktop original preserved after mocked clean",
+      "pass": true
+    },
+    {
+      "name": "desktop original preserved after mocked summary",
+      "pass": true
+    },
+    {
+      "name": "desktop two untimed manual captions",
+      "pass": true
+    },
+    {
+      "name": "desktop untimed export rejected",
+      "pass": true
+    },
+    {
+      "name": "desktop srt timestamps and anonymous manual label",
+      "pass": true
+    },
+    {
+      "name": "desktop vtt timestamps and anonymous manual label",
+      "pass": true
+    },
+    {
+      "name": "desktop manual click seeks",
+      "pass": true
+    },
+    {
+      "name": "desktop overlap export rejected",
+      "pass": true
+    },
+    {
+      "name": "desktop local video extraction WAV preview",
+      "pass": true
+    },
+    {
+      "name": "desktop only explicit mocked text requests",
+      "pass": true
+    },
+    {
+      "name": "desktop real Worker opt-in, preserved text, seek/highlight and cancellation",
+      "pass": true
+    },
+    {
+      "name": "desktop duplicate-submit guard one local mock request",
+      "pass": true
+    },
+    {
+      "name": "desktop fake microphone produces local WAV",
+      "pass": true
+    },
+    {
+      "name": "desktop recording discard removes media",
+      "pass": true
+    },
+    {
+      "name": "desktop corrupt media recovers controls",
+      "pass": true
+    },
+    {
+      "name": "desktop extraction pre-cancellation rejects",
+      "pass": true
+    },
+    {
+      "name": "desktop recording and extraction add no API calls",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation first frame under 5s",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation no horizontal overflow",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation no paid request on load",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation original preserved after mocked clean",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation original preserved after mocked summary",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation two untimed manual captions",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation untimed export rejected",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation srt timestamps and anonymous manual label",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation vtt timestamps and anonymous manual label",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation manual click seeks",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation overlap export rejected",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation local video extraction WAV preview",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation only explicit mocked text requests",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation real Worker opt-in, preserved text, seek/highlight and cancellation",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation duplicate-submit guard one local mock request",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation fake microphone produces local WAV",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation recording discard removes media",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation corrupt media recovers controls",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation extraction pre-cancellation rejects",
+      "pass": true
+    },
+    {
+      "name": "mobile-emulation recording and extraction add no API calls",
+      "pass": true
+    },
+    {
+      "name": "no uncaught browser errors",
+      "pass": true
+    }
+  ],
+  "errors": [],
+  "network": [
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "config"
+    },
+    {
+      "kind": "blocked-external",
+      "method": "GET",
+      "host": "motricialy.com"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "capabilities"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "quota"
+    },
+    {
+      "kind": "local-mock",
+      "method": "POST",
+      "endpoint": "process"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "quota"
+    },
+    {
+      "kind": "local-mock",
+      "method": "POST",
+      "endpoint": "process"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "quota"
+    },
+    {
+      "kind": "blocked-external",
+      "method": "GET",
+      "host": "motricialy.com"
+    },
+    {
+      "kind": "local-mock",
+      "method": "POST",
+      "endpoint": "transcribe"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "quota"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "config"
+    },
+    {
+      "kind": "blocked-external",
+      "method": "GET",
+      "host": "motricialy.com"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "capabilities"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "quota"
+    },
+    {
+      "kind": "local-mock",
+      "method": "POST",
+      "endpoint": "process"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "quota"
+    },
+    {
+      "kind": "local-mock",
+      "method": "POST",
+      "endpoint": "process"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "quota"
+    },
+    {
+      "kind": "blocked-external",
+      "method": "GET",
+      "host": "motricialy.com"
+    },
+    {
+      "kind": "local-mock",
+      "method": "POST",
+      "endpoint": "transcribe"
+    },
+    {
+      "kind": "local-mock",
+      "method": "GET",
+      "endpoint": "quota"
+    }
+  ],
+  "paidApiCalls": 0,
+  "pass": true
+}

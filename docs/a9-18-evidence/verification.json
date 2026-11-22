@@ -1,0 +1,150 @@
+{
+  "stage": "A9.18",
+  "node": "v24.21.0",
+  "platform": "win32",
+  "baseline": "b1ac40ab66775e9b1bf1b8944b2d465fecdd97f2",
+  "checks": {
+    "baselineUnchanged": true,
+    "singleH1": true,
+    "canonical": true,
+    "trackingOnce": true,
+    "chromeOnce": true,
+    "localAssetsPresent": true,
+    "schemas": true,
+    "masks": true,
+    "noPublicExperimentImports": true
+  },
+  "files": [
+    {
+      "path": ".htaccess",
+      "sha256": "bf030729bb1ff613b19b3cc36e7ac7dffee35e2d865946b8c5935880b2b89029",
+      "unchanged": true
+    },
+    {
+      "path": "api/.htaccess",
+      "sha256": "5cf38af7598d8b3d4e18ab2e4b840cc5ccc866e17a4007f784fd4b76e8092bf8",
+      "unchanged": true
+    },
+    {
+      "path": "api/index.php",
+      "sha256": "57ee4a39e56867479e201f1cdcf8662dd27e83cbda51d88f4f8bbcd08071b883",
+      "unchanged": true
+    },
+    {
+      "path": "assets/a2t-captions.js",
+      "sha256": "667ecf19de69cc8f3024cea95c48867b353376864883ab4173a8e2de4cf5e9b5",
+      "unchanged": true
+    },
+    {
+      "path": "assets/a2t-video.js",
+      "sha256": "3a7d1437eb62c471507724e69cbbaaaa510592ce27fbf34bdbed76dc3b18ee1e",
+      "unchanged": true
+    },
+    {
+      "path": "assets/audio-to-text.css",
+      "sha256": "1a615ff7795a948f462a5febd617a699f79f174ef894e75fc02588931dbbf445",
+      "unchanged": true
+    },
+    {
+      "path": "assets/audio-to-text.js",
+      "sha256": "79e181df5df8d20f5d3e4914901d36c44306245878931e4760f270119d13b877",
+      "unchanged": true
+    },
+    {
+      "path": "assets/third_party/MEDIABUNNY-LICENSE.txt",
+      "sha256": "3f3d9e0024b1921b067d6f7f88deb4a60cbe7a78e76c64e3f1d7fc3b779b9d04",
+      "unchanged": true
+    },
+    {
+      "path": "assets/third_party/NOTICE.txt",
+      "sha256": "85c113d599a9de69aa1f6f634ab9a50060005dd90d361c099bd75e10af48a8da",
+      "unchanged": true
+    },
+    {
+      "path": "assets/third_party/video-extract.LEGAL.txt",
+      "sha256": "ae100ce88e950953304d75241ffe3184d955033977e54d786ae315fc9a803335",
+      "unchanged": true
+    },
+    {
+      "path": "assets/video-extract.mjs",
+      "sha256": "fdff586c7637c8f40a4a565f72dff294866d210f5f3f13d3af7795da480a0a0a",
+      "unchanged": true
+    },
+    {
+      "path": "index.html",
+      "sha256": "9277d629d64cdbd93571abb4ada80e44bb2ec1d1f2c93415df16b1bf1dcd5bdf",
+      "unchanged": true
+    }
+  ],
+  "unitTestsPassed": true,
+  "performance": {
+    "scope": "desktop JS aligner only, not model inference or phones",
+    "cases": [
+      {
+        "units": 100,
+        "milliseconds": 7.427699999999959,
+        "coverage": 1,
+        "disposition": "REVIEWABLE_DRAFT_ONLY"
+      },
+      {
+        "units": 1000,
+        "milliseconds": 39.580600000000004,
+        "coverage": 1,
+        "disposition": "REVIEWABLE_DRAFT_ONLY"
+      },
+      {
+        "units": 2500,
+        "milliseconds": 197.20420000000001,
+        "coverage": 1,
+        "disposition": "REVIEWABLE_DRAFT_ONLY"
+      }
+    ]
+  },
+  "historicalReplay": [
+    {
+      "id": "clean",
+      "lexicalErrorRate": 0.06666666666666667,
+      "numericAwareEditRate": 0,
+      "maxRecordedPhraseOnsetError": 0.18199999999999994,
+      "inferenceReproduced": false,
+      "wordOffsetsReproduced": false
+    },
+    {
+      "id": "noisy",
+      "lexicalErrorRate": 0.06666666666666667,
+      "numericAwareEditRate": 0,
+      "maxRecordedPhraseOnsetError": 0.18199999999999994,
+      "inferenceReproduced": false,
+      "wordOffsetsReproduced": false
+    }
+  ],
+  "corpus": {
+    "status": "BLOCKED",
+    "eligibleRecordings": 0,
+    "blockers": [
+      "fewer_than_30_natural_reviewed_recordings",
+      "missing_stratum:english",
+      "missing_stratum:mandarin",
+      "missing_stratum:code-switching",
+      "missing_stratum:accent",
+      "missing_stratum:fast",
+      "missing_stratum:quiet",
+      "missing_stratum:music",
+      "missing_stratum:noise",
+      "missing_stratum:two-speaker",
+      "missing_stratum:four-speaker",
+      "missing_stratum:overlap",
+      "missing_stratum:pauses"
+    ],
+    "caveat": "Metadata attestations do not verify rights, audio hashes, annotations, subgroup accuracy, or device performance."
+  },
+  "paidApiCalls": 0,
+  "productionChanged": false,
+  "releaseVerdict": "BLOCKED",
+  "blockers": [
+    "natural_ground_truth",
+    "physical_iphone_android",
+    "private_backend_source",
+    "model_artifacts_and_original_a9_17_audio"
+  ]
+}

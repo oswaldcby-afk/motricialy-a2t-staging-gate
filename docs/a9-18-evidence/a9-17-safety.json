@@ -1,0 +1,21 @@
+{
+  "stage": "A9.17",
+  "mode": "no-cost-alignment-unit",
+  "checks": {
+    "punctuation_and_case_normalization": true,
+    "exact_transcript_all_matched": true,
+    "paraphrased_transcript_rejected": true,
+    "invented_text_does_not_get_timestamp": true,
+    "non_chronological_source_rejected": true,
+    "out_of_duration_rejected": true,
+    "mixed_chinese_tokenization": true,
+    "number_word_and_digits_equivalent": true,
+    "wrong_number_not_equivalent": true,
+    "empty_original_rejected": true,
+    "duplicate_word_alignment_monotonic": true
+  },
+  "paid_api_calls": 0,
+  "passed": 11,
+  "total": 11,
+  "status": "ALIGNER_QA_PASS"
+}
