@@ -1,0 +1,328 @@
+TAP version 13
+# Subtest: exact original preserved with offsets, whitespace and punctuation
+ok 1 - exact original preserved with offsets, whitespace and punctuation
+  ---
+  duration_ms: 5.1062
+  type: 'test'
+  ...
+# Subtest: numeric equivalence does not improve raw lexical error rate
+ok 2 - numeric equivalence does not improve raw lexical error rate
+  ---
+  duration_ms: 0.2661
+  type: 'test'
+  ...
+# Subtest: wrong number rejects even above 95 percent coverage
+ok 3 - wrong number rejects even above 95 percent coverage
+  ---
+  duration_ms: 1.0181
+  type: 'test'
+  ...
+# Subtest: unmatched suffix never receives invented timing
+ok 4 - unmatched suffix never receives invented timing
+  ---
+  duration_ms: 0.2065
+  type: 'test'
+  ...
+# Subtest: paraphrase fails
+ok 5 - paraphrase fails
+  ---
+  duration_ms: 0.1622
+  type: 'test'
+  ...
+# Subtest: repeated identical words with exact sequence are safe
+ok 6 - repeated identical words with exact sequence are safe
+  ---
+  duration_ms: 0.1438
+  type: 'test'
+  ...
+# Subtest: missing repeated word rejects ambiguous optimal paths
+ok 7 - missing repeated word rejects ambiguous optimal paths
+  ---
+  duration_ms: 0.1219
+  type: 'test'
+  ...
+# Subtest: extra repeated word rejects ambiguous timestamps
+ok 8 - extra repeated word rejects ambiguous timestamps
+  ---
+  duration_ms: 0.1118
+  type: 'test'
+  ...
+# Subtest: Han/Latin adjacent units are distinct and retain positions
+ok 9 - Han/Latin adjacent units are distinct and retain positions
+  ---
+  duration_ms: 3.2474
+  type: 'test'
+  ...
+# Subtest: single Han timestamps do not become Chinese word accuracy
+ok 10 - single Han timestamps do not become Chinese word accuracy
+  ---
+  duration_ms: 0.3116
+  type: 'test'
+  ...
+# Subtest: non-atomic chunk rejected: "hello world"
+ok 11 - non-atomic chunk rejected: "hello world"
+  ---
+  duration_ms: 0.3728
+  type: 'test'
+  ...
+# Subtest: non-atomic chunk rejected: "北京"
+ok 12 - non-atomic chunk rejected: "北京"
+  ---
+  duration_ms: 0.0944
+  type: 'test'
+  ...
+# Subtest: non-atomic chunk rejected: ""
+ok 13 - non-atomic chunk rejected: ""
+  ---
+  duration_ms: 0.0978
+  type: 'test'
+  ...
+# Subtest: invalid time negative
+ok 14 - invalid time negative
+  ---
+  duration_ms: 0.1147
+  type: 'test'
+  ...
+# Subtest: invalid time zero
+ok 15 - invalid time zero
+  ---
+  duration_ms: 0.0729
+  type: 'test'
+  ...
+# Subtest: invalid time nan
+ok 16 - invalid time nan
+  ---
+  duration_ms: 0.068
+  type: 'test'
+  ...
+# Subtest: invalid time pastEnd
+ok 17 - invalid time pastEnd
+  ---
+  duration_ms: 0.064
+  type: 'test'
+  ...
+# Subtest: invalid time reversed
+ok 18 - invalid time reversed
+  ---
+  duration_ms: 0.0831
+  type: 'test'
+  ...
+# Subtest: invalid time nullEnd
+ok 19 - invalid time nullEnd
+  ---
+  duration_ms: 0.0778
+  type: 'test'
+  ...
+# Subtest: overlap fails even when starts are monotonic
+ok 20 - overlap fails even when starts are monotonic
+  ---
+  duration_ms: 0.1014
+  type: 'test'
+  ...
+# Subtest: uncertain candidate rejected
+ok 21 - uncertain candidate rejected
+  ---
+  duration_ms: 0.1013
+  type: 'test'
+  ...
+# Subtest: punctuation containing numeric meaning is not erased
+ok 22 - punctuation containing numeric meaning is not erased
+  ---
+  duration_ms: 0.1573
+  type: 'test'
+  ...
+# Subtest: bounds and pre-cancellation fail closed
+ok 23 - bounds and pre-cancellation fail closed
+  ---
+  duration_ms: 1.5277
+  type: 'test'
+  ...
+# Subtest: numeric expansion is conservative
+ok 24 - numeric expansion is conservative
+  ---
+  duration_ms: 0.1169
+  type: 'test'
+  ...
+# Subtest: fullwidth numeric notation and separated signs do not become positive integers
+ok 25 - fullwidth numeric notation and separated signs do not become positive integers
+  ---
+  duration_ms: 0.1749
+  type: 'test'
+  ...
+# Subtest: leading-dot decimal is not a whole number
+ok 26 - leading-dot decimal is not a whole number
+  ---
+  duration_ms: 0.0768
+  type: 'test'
+  ...
+# Subtest: timing gate measures both onset and offset
+ok 27 - timing gate measures both onset and offset
+  ---
+  duration_ms: 1.1178
+  type: 'test'
+  ...
+# Subtest: timing nulls reduce coverage rather than disappear from denominator
+ok 28 - timing nulls reduce coverage rather than disappear from denominator
+  ---
+  duration_ms: 0.1545
+  type: 'test'
+  ...
+# Subtest: timing text mismatch/out-of-range not counted safe
+ok 29 - timing text mismatch/out-of-range not counted safe
+  ---
+  duration_ms: 0.1155
+  type: 'test'
+  ...
+# Subtest: nearest rank P90 and missing data
+ok 30 - nearest rank P90 and missing data
+  ---
+  duration_ms: 0.11
+  type: 'test'
+  ...
+# Subtest: DER maps anonymous labels globally
+ok 31 - DER maps anonymous labels globally
+  ---
+  duration_ms: 0.6096
+  type: 'test'
+  ...
+# Subtest: four speakers including overlap score zero after permutation
+ok 32 - four speakers including overlap score zero after permutation
+  ---
+  duration_ms: 0.2976
+  type: 'test'
+  ...
+# Subtest: DER overlap missing speaker uses speaker-seconds denominator
+ok 33 - DER overlap missing speaker uses speaker-seconds denominator
+  ---
+  duration_ms: 0.1951
+  type: 'test'
+  ...
+# Subtest: DER false alarms and misses separate
+ok 34 - DER false alarms and misses separate
+  ---
+  duration_ms: 0.2877
+  type: 'test'
+  ...
+# Subtest: DER confusion under speaker collapse
+ok 35 - DER confusion under speaker collapse
+  ---
+  duration_ms: 0.2637
+  type: 'test'
+  ...
+# Subtest: DER duplicate same-speaker intervals are set union
+ok 36 - DER duplicate same-speaker intervals are set union
+  ---
+  duration_ms: 0.311
+  type: 'test'
+  ...
+# Subtest: DER silence unscorable, not a free pass
+ok 37 - DER silence unscorable, not a free pass
+  ---
+  duration_ms: 0.2107
+  type: 'test'
+  ...
+# Subtest: DER rejects malformed boundaries
+ok 38 - DER rejects malformed boundaries
+  ---
+  duration_ms: 0.5485
+  type: 'test'
+  ...
+# Subtest: empty corpus stays blocked
+ok 39 - empty corpus stays blocked
+  ---
+  duration_ms: 0.3422
+  type: 'test'
+  ...
+# Subtest: 30 synthetic recordings cannot satisfy natural gate
+ok 40 - 30 synthetic recordings cannot satisfy natural gate
+  ---
+  duration_ms: 0.2373
+  type: 'test'
+  ...
+# Subtest: DER sweep handles dense turns and shared boundaries
+ok 41 - DER sweep handles dense turns and shared boundaries
+  ---
+  duration_ms: 12.3137
+  type: 'test'
+  ...
+# Subtest: half-open highlights and pauses
+ok 42 - half-open highlights and pauses
+  ---
+  duration_ms: 1.7996
+  type: 'test'
+  ...
+# Subtest: unmatched and invalid index cannot seek
+ok 43 - unmatched and invalid index cannot seek
+  ---
+  duration_ms: 0.1774
+  type: 'test'
+  ...
+# Subtest: timeline snapshots do not follow input mutations
+ok 44 - timeline snapshots do not follow input mutations
+  ---
+  duration_ms: 0.1259
+  type: 'test'
+  ...
+# Subtest: manual timeline independent of model and no automatic playing
+ok 45 - manual timeline independent of model and no automatic playing
+  ---
+  duration_ms: 0.4586
+  type: 'test'
+  ...
+# Subtest: media replacement invalidates seeks
+ok 46 - media replacement invalidates seeks
+  ---
+  duration_ms: 0.1428
+  type: 'test'
+  ...
+# Subtest: split and merge require explicit human boundaries and preserve text
+ok 47 - split and merge require explicit human boundaries and preserve text
+  ---
+  duration_ms: 0.5278
+  type: 'test'
+  ...
+# Subtest: speaker defaults unknown for overlap, low trust or names
+ok 48 - speaker defaults unknown for overlap, low trust or names
+  ---
+  duration_ms: 0.2492
+  type: 'test'
+  ...
+# Subtest: session is opt-in; no worker before user action
+ok 49 - session is opt-in; no worker before user action
+  ---
+  duration_ms: 0.3331
+  type: 'test'
+  ...
+# Subtest: cancel terminates worker and ignores late results
+ok 50 - cancel terminates worker and ignores late results
+  ---
+  duration_ms: 0.4411
+  type: 'test'
+  ...
+# Subtest: worker error sanitized and terminated
+ok 51 - worker error sanitized and terminated
+  ---
+  duration_ms: 0.2648
+  type: 'test'
+  ...
+# Subtest: same-duration media replacement clears stale highlights
+ok 52 - same-duration media replacement clears stale highlights
+  ---
+  duration_ms: 0.1872
+  type: 'test'
+  ...
+# Subtest: empty timeline still needs valid duration and splits preserve Unicode
+ok 53 - empty timeline still needs valid duration and splits preserve Unicode
+  ---
+  duration_ms: 0.1606
+  type: 'test'
+  ...
+1..53
+# tests 53
+# suites 0
+# pass 53
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 112.5538
