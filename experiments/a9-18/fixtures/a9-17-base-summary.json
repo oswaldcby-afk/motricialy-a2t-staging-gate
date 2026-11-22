@@ -1,0 +1,99 @@
+{
+  "stage": "A9.17",
+  "approach": "local whisper-base.en q8, word timestamps, CPU",
+  "model": "Xenova/whisper-base.en",
+  "library": "@huggingface/transformers@4.3.2",
+  "paid_api_requests": 0,
+  "public_enabled": false,
+  "results": [
+    {
+      "id": "clean",
+      "seconds": 8.28325,
+      "inference_seconds": 2.44,
+      "rtf": 0.295,
+      "word_count": 15,
+      "reference_word_count": 15,
+      "word_error_rate": 0.0667,
+      "timestamped_chunks": 15,
+      "invalid_timestamp_chunks": 0,
+      "valid_timestamps": true,
+      "alignment": {
+        "coverage": 1,
+        "wordErrorRate": 0,
+        "matchedWords": 15,
+        "originalWords": 15,
+        "unmatchedWords": [],
+        "disposition": "REVIEWABLE_DRAFT_ONLY"
+      },
+      "alignment_error": null,
+      "anchor_onsets": [
+        {
+          "reference_start": 0,
+          "detected_start": 0.14,
+          "onset_error_seconds": 0.14
+        },
+        {
+          "reference_start": 2.698,
+          "detected_start": 2.88,
+          "onset_error_seconds": 0.182
+        },
+        {
+          "reference_start": 6.013,
+          "detected_start": 6.18,
+          "onset_error_seconds": 0.167
+        }
+      ],
+      "median_onset_error_seconds": 0.167,
+      "max_onset_error_seconds": 0.182,
+      "has_all_three_speech_anchors": true,
+      "recognized_text_length": 79,
+      "synthetic_text_excerpt": " The blue valve is open. Set the pressure to 17. No action items were assigned."
+    },
+    {
+      "id": "noisy",
+      "seconds": 8.28325,
+      "inference_seconds": 2.36,
+      "rtf": 0.285,
+      "word_count": 15,
+      "reference_word_count": 15,
+      "word_error_rate": 0.0667,
+      "timestamped_chunks": 15,
+      "invalid_timestamp_chunks": 0,
+      "valid_timestamps": true,
+      "alignment": {
+        "coverage": 1,
+        "wordErrorRate": 0,
+        "matchedWords": 15,
+        "originalWords": 15,
+        "unmatchedWords": [],
+        "disposition": "REVIEWABLE_DRAFT_ONLY"
+      },
+      "alignment_error": null,
+      "anchor_onsets": [
+        {
+          "reference_start": 0,
+          "detected_start": 0.16,
+          "onset_error_seconds": 0.16
+        },
+        {
+          "reference_start": 2.698,
+          "detected_start": 2.88,
+          "onset_error_seconds": 0.182
+        },
+        {
+          "reference_start": 6.013,
+          "detected_start": 6.18,
+          "onset_error_seconds": 0.167
+        }
+      ],
+      "median_onset_error_seconds": 0.167,
+      "max_onset_error_seconds": 0.182,
+      "has_all_three_speech_anchors": true,
+      "recognized_text_length": 79,
+      "synthetic_text_excerpt": " The blue valve is open. Set the pressure to 17. No action items were assigned."
+    }
+  ],
+  "status": "LOCAL_WHISPER_TIMING_TECHNICAL_PASS",
+  "model_loading_seconds": 1.78,
+  "production_gate": "BLOCKED_NEEDS_NATURAL_MULTILINGUAL_AND_MOBILE_BENCHMARK"
+}
