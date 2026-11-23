@@ -1,9 +1,13 @@
-# Hostinger / Motricialy Stage A9 isolation gate.
-# This directory is a closed test fixture, not an application or public landing page.
+# Motricialy AI PDF Summarizer: isolated CLOSED QA gate, 2026-11-23
 Options -Indexes
+<IfModule mod_authz_core.c>
 Require all denied
+</IfModule>
 <IfModule mod_headers.c>
-  Header always set Cache-Control "no-store, max-age=0"
-  Header always set X-Robots-Tag "noindex, nofollow, noarchive"
-  Header always set X-Content-Type-Options "nosniff"
+Header always set X-Robots-Tag "noindex, nofollow, noarchive"
+Header always set Cache-Control "no-store"
+</IfModule>
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteRule ^(?:vendor|lib|config|tests|qa)(?:/|$) - [F,L,NC]
 </IfModule>
